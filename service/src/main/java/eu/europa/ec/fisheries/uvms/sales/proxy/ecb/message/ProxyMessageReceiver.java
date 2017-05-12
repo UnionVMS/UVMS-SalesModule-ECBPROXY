@@ -4,7 +4,7 @@ import eu.europa.ec.fisheries.schema.sales.proxy.ecb.types.v1.EcbProxyBaseReques
 import eu.europa.ec.fisheries.schema.sales.proxy.ecb.types.v1.GetExchangeRateRequest;
 import eu.europa.ec.fisheries.schema.sales.proxy.ecb.types.v1.GetExchangeRateResponse;
 import eu.europa.ec.fisheries.uvms.message.MessageConstants;
-import eu.europa.ec.fisheries.uvms.sales.model.exception.MarshallException;
+import eu.europa.ec.fisheries.uvms.sales.model.exception.SalesMarshallException;
 import eu.europa.ec.fisheries.uvms.sales.model.mapper.JAXBMarshaller;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.EcbProxyClient;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.constant.EcbProxyMessageConstants;
@@ -65,7 +65,7 @@ public class ProxyMessageReceiver implements MessageListener {
                     throw new EcbProxyException("Method " + request.getMethod().name() + " implemented!");
 
             }
-        } catch (MarshallException | EcbProxyException e) {
+        } catch (SalesMarshallException | EcbProxyException e) {
             LOG.error("Something went wrong interpreting a received message in the ECB proxy", e);
             errorEvent.fire(new EcbProxyEventMessage(requestMessage, e.getMessage()));
         }
