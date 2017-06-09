@@ -15,7 +15,9 @@ import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.exception.EcbProxyException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ejb.*;
+import javax.ejb.ActivationConfigProperty;
+import javax.ejb.EJB;
+import javax.ejb.MessageDriven;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.jms.Message;
@@ -43,7 +45,6 @@ public class ProxyMessageReceiver implements MessageListener {
     private EcbProxyClient client;
 
     @Override
-    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public void onMessage(Message message) {
         LOG.debug("Received message in ProxyMessageReceiver of ECB Proxy");
 
