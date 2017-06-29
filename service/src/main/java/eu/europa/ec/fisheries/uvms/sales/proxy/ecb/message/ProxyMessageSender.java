@@ -22,8 +22,6 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.Resource;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 import javax.enterprise.event.Observes;
 import javax.jms.*;
 
@@ -41,7 +39,6 @@ public class ProxyMessageSender {
      * @param event
      * @throws EcbProxyException when something goes wrong
      */
-    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public void sendExchangeRate(@Observes @EcbProxySendEvent EcbProxyEventMessage event) throws EcbProxyException {
         TextMessage requestMessage = event.getRequestMessage();
         try {
@@ -56,7 +53,6 @@ public class ProxyMessageSender {
      * @param event
      * @throws EcbProxyException when something goes wrong
      */
-    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public void sendErrorMessage(@Observes @EcbProxyErrorEvent EcbProxyEventMessage event) {
         TextMessage requestMessage = event.getRequestMessage();
         try {
@@ -78,7 +74,6 @@ public class ProxyMessageSender {
      * @return
      * @throws EcbProxyException
      */
-    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public String sendMessage(Destination toQueue, Destination responseQueue, String textMessage, int deliveryMode, int defaultPriority, long timeToLive) throws EcbProxyException {
         return sendMessage(toQueue, responseQueue, textMessage, null, deliveryMode, defaultPriority, timeToLive);
     }
@@ -95,7 +90,6 @@ public class ProxyMessageSender {
      * @return The JMSMessage id of the sent message
      * @throws EcbProxyException
      */
-    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public String sendMessage(Destination responseQueue, String textMessage, String correlationId) throws EcbProxyException {
         return sendMessage(responseQueue, null, textMessage, correlationId, null, null, null);
     }
@@ -112,7 +106,6 @@ public class ProxyMessageSender {
      * @return The JMSMessage id of the sent message
      * @throws EcbProxyException
      */
-    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public String sendMessage(Destination toQueue, Destination replyQueue, String textMessage) throws EcbProxyException {
         return sendMessage(toQueue, replyQueue, textMessage, null, null, null, null);
     }
