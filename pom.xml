@@ -20,7 +20,7 @@
         <guava.version>20.0</guava.version>
         <orika.version>1.5.0</orika.version>
         <uvms.commons.version>2.0.17</uvms.commons.version>
-        <maven-release-plugin>2.5.3</maven-release-plugin>
+        <maven.release.plugin>2.5.3</maven.release.plugin>
         <jacoco.version>0.7.9</jacoco.version>
         <scm.connection>scm:git:https://github.com/UnionVMS/UVMS-SalesModule-ECBPROXY.git</scm.connection>
     </properties>
@@ -121,7 +121,7 @@
         <plugins>
             <plugin>
                 <artifactId>maven-release-plugin</artifactId>
-                <version>${maven-release-plugin}</version>
+                <version>${maven.release.plugin}</version>
                 <dependencies>
                     <dependency>
                         <groupId>org.apache.maven.scm</groupId>
