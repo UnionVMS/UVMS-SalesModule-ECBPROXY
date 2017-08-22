@@ -1,5 +1,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>fish.focus.maven</groupId>
+        <artifactId>focus-pom</artifactId>
+        <version>1.5</version>
+        <relativePath />
+    </parent>
     
     <groupId>eu.europa.ec.fisheries.uvms.sales</groupId>
     <artifactId>sales-proxy-ecb</artifactId>
@@ -20,7 +27,6 @@
         <guava.version>20.0</guava.version>
         <orika.version>1.5.0</orika.version>
         <uvms.commons.version>2.0.17</uvms.commons.version>
-        <maven.release.plugin>2.5.3</maven.release.plugin>
         <jacoco.version>0.7.9</jacoco.version>
         <scm.connection>scm:git:https://github.com/UnionVMS/UVMS-SalesModule-ECBPROXY.git</scm.connection>
     </properties>
@@ -117,22 +123,6 @@
         <tag>HEAD</tag>
     </scm>
 
-    <build>
-        <plugins>
-            <plugin>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>${maven.release.plugin}</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.apache.maven.scm</groupId>
-                        <artifactId>maven-scm-provider-gitexe</artifactId>
-                        <version>1.9.5</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-        </plugins>
-    </build>
-
     <profiles>
         <profile>
             <id>belgium-local</id>
@@ -142,6 +132,9 @@
                     <url>https://apjenp01.dg3.be/nexus/repository/maven-snapshots/</url>
                 </snapshotRepository>
             </distributionManagement>
+            <properties>
+                <focus-pom.java.version>1.8</focus-pom.java.version>
+            </properties>
         </profile>
         <profile>
             <id>jacoco</id>
