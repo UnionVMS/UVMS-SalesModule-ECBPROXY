@@ -23,11 +23,12 @@
         <sl4j.version>1.7.12</sl4j.version>
         <logback.version>1.1.3</logback.version>
         <logback.core.version>1.1.3</logback.core.version>
-        <sales.model.version>1.0.0</sales.model.version>
+        <sales.model.version>1.0.5</sales.model.version>
         <guava.version>20.0</guava.version>
         <orika.version>1.5.0</orika.version>
         <uvms.commons.version>2.0.17</uvms.commons.version>
         <jacoco.version>0.7.9</jacoco.version>
+        <joda.time.version>2.9.7</joda.time.version>
         <scm.connection>scm:git:https://github.com/UnionVMS/UVMS-SalesModule-ECBPROXY.git</scm.connection>
     </properties>
 
@@ -53,6 +54,12 @@
         </dependencies>
     </dependencyManagement>
     <dependencies>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>${joda.time.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
