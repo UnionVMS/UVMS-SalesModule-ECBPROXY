@@ -3,7 +3,7 @@ package eu.europa.ec.fisheries.uvms.sales.proxy.ecb.message;
 import eu.europa.ec.fisheries.schema.sales.proxy.ecb.types.v1.EcbProxyBaseRequest;
 import eu.europa.ec.fisheries.schema.sales.proxy.ecb.types.v1.GetExchangeRateRequest;
 import eu.europa.ec.fisheries.schema.sales.proxy.ecb.types.v1.GetExchangeRateResponse;
-import eu.europa.ec.fisheries.uvms.message.MessageConstants;
+import eu.europa.ec.fisheries.uvms.commons.message.api.MessageConstants;
 import eu.europa.ec.fisheries.uvms.sales.model.exception.SalesMarshallException;
 import eu.europa.ec.fisheries.uvms.sales.model.mapper.JAXBMarshaller;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.EcbProxyClient;

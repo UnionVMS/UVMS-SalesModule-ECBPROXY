@@ -26,9 +26,10 @@
         <sales.model.version>1.0.5</sales.model.version>
         <guava.version>20.0</guava.version>
         <orika.version>1.5.0</orika.version>
-        <uvms.commons.version>2.0.17</uvms.commons.version>
+        <uvms.commons.version>3.0.5</uvms.commons.version>
         <jacoco.version>0.7.9</jacoco.version>
         <joda.time.version>2.9.7</joda.time.version>
+        <lombok.version>1.16.18</lombok.version>
         <scm.connection>scm:git:https://github.com/UnionVMS/UVMS-SalesModule-ECBPROXY.git</scm.connection>
     </properties>
 
@@ -47,9 +48,14 @@
                 <version>${sales.model.version}</version>
             </dependency>
             <dependency>
-                <groupId>eu.europa.ec.fisheries.uvms</groupId>
-                <artifactId>uvms-commons</artifactId>
+                <groupId>eu.europa.ec.fisheries.uvms.commons</groupId>
+                <artifactId>uvms-commons-message</artifactId>
                 <version>${uvms.commons.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
