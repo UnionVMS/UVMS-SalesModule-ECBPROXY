@@ -10,7 +10,7 @@
     
     <groupId>eu.europa.ec.fisheries.uvms.sales</groupId>
     <artifactId>sales-proxy-ecb</artifactId>
-    <version>1.0.2-SNAPSHOT</version>
+    <version>1.0.2</version>
     
     <packaging>pom</packaging>
 
@@ -133,7 +133,7 @@
     </distributionManagement>
     <scm>
         <connection>${scm.connection}</connection>
-        <tag>HEAD</tag>
+        <tag>sales-proxy-ecb-1.0.2</tag>
     </scm>
 
     <profiles>
