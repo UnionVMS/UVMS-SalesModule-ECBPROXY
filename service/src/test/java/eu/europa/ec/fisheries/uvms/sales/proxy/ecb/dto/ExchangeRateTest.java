@@ -44,4 +44,22 @@ public class ExchangeRateTest {
         assertEquals(startDate, exchangeRate.getStartDate());
     }
 
+    @Test
+    public void testExchangeRateBuilder() throws Exception {
+        BigDecimal rate = new BigDecimal(1.68);
+        String sourceCurrency = "NZD";
+        String targetCurrency = "EUR";
+        LocalDate startDate = new LocalDate(2018, 1, 16);
+
+        ExchangeRate exchangeRate = new ExchangeRate()
+                .rate(rate)
+                .sourceCurrency(sourceCurrency)
+                .targetCurrency(targetCurrency)
+                .startDate(startDate);
+
+        assertEquals(rate, exchangeRate.getRate());
+        assertEquals(sourceCurrency, exchangeRate.getSourceCurrency());
+        assertEquals(targetCurrency, exchangeRate.getTargetCurrency());
+        assertEquals(startDate, exchangeRate.getStartDate());
+    }
 }

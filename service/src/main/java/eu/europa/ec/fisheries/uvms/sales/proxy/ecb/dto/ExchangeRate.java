@@ -62,7 +62,7 @@ public class ExchangeRate {
         return this;
     }
 
-    public ExchangeRate targetCurrency(LocalDate startDate) {
+    public ExchangeRate startDate(LocalDate startDate) {
         this.startDate = startDate;
         return this;
     }
