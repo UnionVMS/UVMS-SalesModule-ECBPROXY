@@ -2,6 +2,7 @@ package eu.europa.ec.fisheries.uvms.sales.proxy.ecb;
 
 import com.google.common.base.Optional;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.dto.ExchangeRate;
+import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.exception.EcbProxyException;
 import org.joda.time.LocalDate;
 
 import java.util.List;
@@ -16,6 +17,6 @@ public interface EcbRestService {
      * @param date the first date for which the currencies need to be retrieved
      * @return a list of currency rates. When nothing is found, an empty list.
      */
-    List<ExchangeRate> findExchangeRates(Optional<LocalDate> date);
+    List<ExchangeRate> findExchangeRates(Optional<LocalDate> date) throws EcbProxyException;
 
 }

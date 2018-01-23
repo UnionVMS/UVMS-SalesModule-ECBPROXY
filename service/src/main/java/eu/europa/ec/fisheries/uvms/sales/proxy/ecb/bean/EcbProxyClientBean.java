@@ -4,8 +4,8 @@ import com.google.common.base.Optional;
 import eu.europa.ec.fisheries.schema.sales.proxy.ecb.types.v1.GetExchangeRateRequest;
 import eu.europa.ec.fisheries.schema.sales.proxy.ecb.types.v1.GetExchangeRateResponse;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.EcbProxyClient;
-import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.ExchangeRateCache;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.exception.EcbProxyException;
+import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.service.ExchangeRateService;
 import org.joda.time.LocalDate;
 
 import javax.ejb.EJB;
@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 public class EcbProxyClientBean implements EcbProxyClient {
 
     @EJB
-    private ExchangeRateCache exchangeRateCache;
+    private ExchangeRateService exchangeRateService;
 
     @Override
     public GetExchangeRateResponse getExchangeRate(GetExchangeRateRequest request) throws EcbProxyException {
@@ -37,15 +37,14 @@ public class EcbProxyClientBean implements EcbProxyClient {
         }
     }
 
-    private BigDecimal calculateExchangeRate(String sourceCurrency, String targetCurrency, LocalDate date) {
+    private BigDecimal calculateExchangeRate(String sourceCurrency, String targetCurrency, LocalDate date) throws EcbProxyException {
         //find the rate in the cache
-        Optional<BigDecimal> rate = exchangeRateCache.findRate(sourceCurrency, targetCurrency, date);
-
+        Optional<BigDecimal> rate = exchangeRateService.findRateMostRecentTillDate(date, sourceCurrency, targetCurrency);
         if (rate.isPresent()) {
             return rate.get();
         } else {
             //maybe the inverse rate is in the cache?
-            Optional<BigDecimal> inverseRate = exchangeRateCache.findRate(targetCurrency, sourceCurrency, date);
+            Optional<BigDecimal> inverseRate = exchangeRateService.findRateMostRecentTillDate(date, targetCurrency, sourceCurrency);
 
             if (inverseRate.isPresent()) {
                 return BigDecimal.ONE.setScale(4)

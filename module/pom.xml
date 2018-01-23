@@ -38,6 +38,10 @@
                     <defaultLibBundleDir>lib</defaultLibBundleDir>
                     <modules>
                         <ejbModule>
+                            <groupId>${project.groupId}</groupId>
+                            <artifactId>${project.parent.artifactId}-domain</artifactId>
+                        </ejbModule>
+                        <ejbModule>
                             <groupId>${project.groupId}</groupId>  
                             <artifactId>${project.parent.artifactId}-service</artifactId>
                         </ejbModule>
@@ -57,6 +61,12 @@
     </build>
 
     <dependencies>
+        <dependency>
+            <groupId>${project.parent.groupId}</groupId>
+            <artifactId>${project.parent.artifactId}-domain</artifactId>
+            <version>${project.version}</version>
+            <type>ejb</type>
+        </dependency>
         <dependency>
 			<groupId>${project.parent.groupId}</groupId>
             <artifactId>${project.parent.artifactId}-service</artifactId>

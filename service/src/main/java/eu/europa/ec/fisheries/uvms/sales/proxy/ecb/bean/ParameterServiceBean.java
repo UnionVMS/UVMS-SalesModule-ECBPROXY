@@ -15,6 +15,8 @@ package eu.europa.ec.fisheries.uvms.sales.proxy.ecb.bean;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.ParameterService;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.constant.ParameterKey;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.entity.Parameter;
+import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.exception.EcbProxyException;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +26,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+@Slf4j
 @Stateless
 public class ParameterServiceBean implements ParameterService {
 
@@ -33,14 +36,21 @@ public class ParameterServiceBean implements ParameterService {
     final static Logger LOG = LoggerFactory.getLogger(ParameterServiceBean.class);
 
     @Override
-    public String getParameterValue(ParameterKey key)  {
+    public String getParameterValue(ParameterKey key) throws EcbProxyException {
         try {
             Query query = em.createNamedQuery(Parameter.FIND_BY_NAME);
             query.setParameter("key", key.getKey());
             Parameter entity = (Parameter) query.getSingleResult();
             return entity.getParamValue();
-        }catch (NoResultException e){
-            throw new IllegalArgumentException("Parameter is not found in database, key: " + key);
+
+        } catch (NoResultException e) {
+            String errorMessage = "Settings parameter is mandatory for key: " + key;
+            log.error(errorMessage);
+            throw new EcbProxyException(errorMessage);
+        } catch (Exception e) {
+            String errorMessage = "Unable to retrieve parameter value for key: " + key;
+            log.error(errorMessage);
+            throw new EcbProxyException(errorMessage);
         }
     }
 }

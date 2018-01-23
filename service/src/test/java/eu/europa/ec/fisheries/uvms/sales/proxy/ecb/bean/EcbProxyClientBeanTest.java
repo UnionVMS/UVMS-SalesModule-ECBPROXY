@@ -3,8 +3,8 @@ package eu.europa.ec.fisheries.uvms.sales.proxy.ecb.bean;
 import com.google.common.base.Optional;
 import eu.europa.ec.fisheries.schema.sales.proxy.ecb.types.v1.GetExchangeRateRequest;
 import eu.europa.ec.fisheries.schema.sales.proxy.ecb.types.v1.GetExchangeRateResponse;
-import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.ExchangeRateCache;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.exception.EcbProxyException;
+import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.service.ExchangeRateService;
 import org.joda.time.LocalDate;
 import org.junit.Rule;
 import org.junit.Test;
@@ -17,8 +17,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.math.BigDecimal;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EcbProxyClientBeanTest {
@@ -27,7 +26,7 @@ public class EcbProxyClientBeanTest {
     private EcbProxyClientBean ecbProxyClientBean;
 
     @Mock
-    private ExchangeRateCache exchangeRateCache;
+    private ExchangeRateService exchangeRateService;
 
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
@@ -47,13 +46,14 @@ public class EcbProxyClientBeanTest {
                 .withTargetCurrency(targetCurrency);
 
         //mock
-        when(exchangeRateCache.findRate(sourceCurrency, targetCurrency, date)).thenReturn(Optional.of(rate));
+        doReturn(Optional.of(rate)).when(exchangeRateService).findRateMostRecentTillDate(date, sourceCurrency, targetCurrency);
 
         //execute
         GetExchangeRateResponse response = ecbProxyClientBean.getExchangeRate(request);
 
         //verify and assert
-        verify(exchangeRateCache).findRate(sourceCurrency, targetCurrency, date);
+        verify(exchangeRateService).findRateMostRecentTillDate(date, sourceCurrency, targetCurrency);
+        verifyNoMoreInteractions(exchangeRateService);
 
         assertEquals(sourceCurrency, response.getSourceCurrency());
         assertEquals(targetCurrency, response.getTargetCurrency());
@@ -76,15 +76,16 @@ public class EcbProxyClientBeanTest {
                 .withTargetCurrency(targetCurrency);
 
         //mock
-        when(exchangeRateCache.findRate(sourceCurrency, targetCurrency, date)).thenReturn(Optional.<BigDecimal>absent());
-        when(exchangeRateCache.findRate(targetCurrency, sourceCurrency, date)).thenReturn(Optional.of(rate));
+        doReturn(Optional.absent()).when(exchangeRateService).findRateMostRecentTillDate(date, sourceCurrency, targetCurrency);
+        doReturn(Optional.of(rate)).when(exchangeRateService).findRateMostRecentTillDate(date, targetCurrency, sourceCurrency);
 
         //execute
         GetExchangeRateResponse response = ecbProxyClientBean.getExchangeRate(request);
 
         //verify and assert
-        verify(exchangeRateCache).findRate(sourceCurrency, targetCurrency, date);
-        verify(exchangeRateCache).findRate(targetCurrency, sourceCurrency, date);
+        verify(exchangeRateService).findRateMostRecentTillDate(date, sourceCurrency, targetCurrency);
+        verify(exchangeRateService).findRateMostRecentTillDate(date, targetCurrency, sourceCurrency);
+        verifyNoMoreInteractions(exchangeRateService);
 
         assertEquals(sourceCurrency, response.getSourceCurrency());
         assertEquals(targetCurrency, response.getTargetCurrency());
@@ -105,8 +106,8 @@ public class EcbProxyClientBeanTest {
                 .withTargetCurrency(targetCurrency);
 
         //mock
-        when(exchangeRateCache.findRate(sourceCurrency, targetCurrency, date)).thenReturn(Optional.<BigDecimal>absent());
-        when(exchangeRateCache.findRate(targetCurrency, sourceCurrency, date)).thenReturn(Optional.<BigDecimal>absent());
+        doReturn(Optional.absent()).when(exchangeRateService).findRateMostRecentTillDate(date, sourceCurrency, targetCurrency);
+        doReturn(Optional.absent()).when(exchangeRateService).findRateMostRecentTillDate(date, targetCurrency, sourceCurrency);
 
         expectedException.expect(EcbProxyException.class);
         expectedException.expectMessage("No known exchange rate for " + sourceCurrency + " to " + targetCurrency + " on " + date);
@@ -115,8 +116,10 @@ public class EcbProxyClientBeanTest {
         ecbProxyClientBean.getExchangeRate(request);
 
         //verify and assert
-        verify(exchangeRateCache).findRate(sourceCurrency, targetCurrency, date);
-        verify(exchangeRateCache).findRate(targetCurrency, sourceCurrency, date);
+        verify(exchangeRateService).findRateMostRecentTillDate(date, sourceCurrency, targetCurrency);
+        verify(exchangeRateService).findRateMostRecentTillDate(date, targetCurrency, sourceCurrency);
+        verifyNoMoreInteractions(exchangeRateService);
+
     }
 
 }

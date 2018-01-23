@@ -10,25 +10,22 @@ import java.math.BigDecimal;
 @ToString
 public class ExchangeRate {
 
-    private ExchangeRateKey key;
     private BigDecimal rate;
+    private String sourceCurrency;
+    private String targetCurrency;
+    private LocalDate startDate;
 
     public ExchangeRate() {
 
     }
 
-    public ExchangeRate(BigDecimal rate, String sourceCurrency, String targetCurrency, LocalDate date) {
-        this.key = new ExchangeRateKey(date, sourceCurrency, targetCurrency);
+    public ExchangeRate(BigDecimal rate, String sourceCurrency, String targetCurrency, LocalDate startDate) {
         this.rate = rate;
+        this.sourceCurrency = sourceCurrency;
+        this.targetCurrency = targetCurrency;
+        this.startDate = startDate;
     }
 
-    public ExchangeRateKey getKey() {
-        return key;
-    }
-
-    public void setKey(ExchangeRateKey key) {
-        this.key = key;
-    }
 
     public BigDecimal getRate() {
         return rate;
@@ -38,14 +35,36 @@ public class ExchangeRate {
         this.rate = rate;
     }
 
+    public String getSourceCurrency() { return sourceCurrency; }
 
-    public ExchangeRate key(ExchangeRateKey key) {
-        this.key = key;
-        return this;
-    }
+    public void setSourceCurrency(String sourceCurrency) { this.sourceCurrency = sourceCurrency; }
+
+    public String getTargetCurrency() { return targetCurrency; }
+
+    public void setTargetCurrency(String targetCurrency) { this.targetCurrency = targetCurrency; }
+
+    public LocalDate getStartDate() { return startDate; }
+
+    public void setStartDate(LocalDate startDate) { this.startDate = startDate; }
 
     public ExchangeRate rate(BigDecimal rate) {
         this.rate = rate;
         return this;
     }
+
+    public ExchangeRate sourceCurrency(String sourceCurrency) {
+        this.sourceCurrency = sourceCurrency;
+        return this;
+    }
+
+    public ExchangeRate targetCurrency(String targetCurrency) {
+        this.targetCurrency = targetCurrency;
+        return this;
+    }
+
+    public ExchangeRate targetCurrency(LocalDate startDate) {
+        this.startDate = startDate;
+        return this;
+    }
+
 }

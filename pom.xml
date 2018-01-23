@@ -30,6 +30,7 @@
         <jacoco.version>0.7.9</jacoco.version>
         <joda.time.version>2.9.7</joda.time.version>
         <lombok.version>1.16.18</lombok.version>
+        <commons-lang.version>2.6</commons-lang.version>
         <scm.connection>scm:git:https://github.com/UnionVMS/UVMS-SalesModule-ECBPROXY.git</scm.connection>
     </properties>
 
@@ -57,8 +58,16 @@
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
             </dependency>
+            <dependency>
+                <groupId>commons-lang</groupId>
+                <artifactId>commons-lang</artifactId>
+                <version>${commons-lang.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
+
+
+
     <dependencies>
         <dependency>
             <groupId>joda-time</groupId>
@@ -191,8 +200,9 @@
         </profile>
     </profiles>
 
-  <modules>
-    <module>module</module>
-    <module>service</module>
-  </modules>
+    <modules>
+        <module>domain</module>
+        <module>service</module>
+        <module>module</module>
+    </modules>
 </project>

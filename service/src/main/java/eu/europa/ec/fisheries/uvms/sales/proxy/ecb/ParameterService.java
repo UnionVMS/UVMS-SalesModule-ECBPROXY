@@ -12,12 +12,13 @@ copy of the GNU General Public License along with the IFDM Suite. If not, see <h
 package eu.europa.ec.fisheries.uvms.sales.proxy.ecb;
 
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.constant.ParameterKey;
+import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.exception.EcbProxyException;
 
 import javax.ejb.Local;
 
 @Local
 public interface ParameterService {
 
-    String getParameterValue(ParameterKey key);
+    String getParameterValue(ParameterKey key) throws EcbProxyException;
 
 }
