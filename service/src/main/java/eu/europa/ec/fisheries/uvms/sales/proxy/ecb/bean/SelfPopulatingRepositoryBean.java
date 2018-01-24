@@ -48,7 +48,6 @@ public class SelfPopulatingRepositoryBean {
 
     private void populateRepositoryForMissingExchangeRates() {
         if (!isAlreadyStartedPopulatingRepositoryForMissingExchangeRatesAllowed()) {
-            setFinishedPopulatingExchangeRateRepository();
             log.info("Already busy populating currency exchange rate repository for today's rates");
             return;
         }

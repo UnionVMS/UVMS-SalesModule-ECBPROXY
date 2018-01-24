@@ -129,6 +129,30 @@ public class SelfPopulatingRepositoryBeanTest {
     }
 
     @Test
+    public void testRetryPopulateRepositoryForExchangeRepositoryUpToDateNoActionRequired() throws Exception {
+        //data set
+        LocalDate yesterday = LocalDate.now().minusDays(1);
+        LocalDate startDate = new LocalDate(2018, 1, 17);
+        ExchangeRate exchangeRate = new ExchangeRate();
+        exchangeRate.setRate(new BigDecimal(1.68));
+        exchangeRate.setSourceCurrency("NZD");
+        exchangeRate.setTargetCurrency("EUR");
+        exchangeRate.setStartDate(new LocalDate(2018, 1, 16));
+        ArrayList<ExchangeRate> exchangeRates = new ArrayList<>();
+        exchangeRates.add(exchangeRate);
+
+        //mock
+        doReturn(Optional.of(yesterday)).when(exchangeRateService).getMostRecentExchangeRateDate();
+
+        //execute
+        selfPopulatingRepositoryBean.retryPopulateRepositoryForMissingExchangeRates(timer);
+
+        //verify and assert
+        verify(exchangeRateService).getMostRecentExchangeRateDate();
+        verifyNoMoreInteractions(ecbRestService, exchangeRateService, timer);
+    }
+
+    @Test
     public void tryRetryPopulateRepositoryForMissingExchangeRatesAndEcbProxyException() throws Exception {
         //data set
         LocalDate mostRecentExchangeRateDate = new LocalDate(2018, 1, 16);
