@@ -13,6 +13,9 @@ package eu.europa.ec.fisheries.uvms.sales.proxy.ecb.constant;
 
 public class EcbProxyMessageConstants {
 
+    private EcbProxyMessageConstants() {
+    }
+
     public static final String QUEUE_JNDI = "java:/jms/queue/UVMSSalesEcbProxy";
     public static final String QUEUE_NAME = "UVMSSalesEcbProxy";
 

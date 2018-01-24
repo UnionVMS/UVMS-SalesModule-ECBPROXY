@@ -33,7 +33,7 @@ public class ParameterServiceBean implements ParameterService {
     @PersistenceContext(unitName = "ecbProxyPU")
     private EntityManager em;
 
-    final static Logger LOG = LoggerFactory.getLogger(ParameterServiceBean.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ParameterServiceBean.class);
 
     @Override
     public String getParameterValue(ParameterKey key) throws EcbProxyException {
