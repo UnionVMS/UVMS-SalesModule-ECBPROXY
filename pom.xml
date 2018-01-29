@@ -28,6 +28,7 @@
         <guava.version>20.0</guava.version>
         <orika.version>1.5.0</orika.version>
         <uvms.commons.version>3.0.5</uvms.commons.version>
+        <uvms.config.version>3.1.1</uvms.config.version>
         <jacoco.version>0.7.9</jacoco.version>
         <joda.time.version>2.9.7</joda.time.version>
         <lombok.version>1.16.18</lombok.version>
@@ -53,6 +54,17 @@
                 <groupId>eu.europa.ec.fisheries.uvms.commons</groupId>
                 <artifactId>uvms-commons-message</artifactId>
                 <version>${uvms.commons.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>eu.europa.ec.fisheries.uvms</groupId>
+                <artifactId>uvms-config</artifactId>
+                <version>${uvms.config.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>eu.europa.ec.fisheries.uvms.sales</groupId>
+                <artifactId>sales-proxy-ecb-message</artifactId>
+                <version>${sales.model.version}</version>
+                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.projectlombok</groupId>
@@ -213,6 +225,7 @@
 
     <modules>
         <module>domain</module>
+        <module>message</module>
         <module>service</module>
         <module>module</module>
     </modules>

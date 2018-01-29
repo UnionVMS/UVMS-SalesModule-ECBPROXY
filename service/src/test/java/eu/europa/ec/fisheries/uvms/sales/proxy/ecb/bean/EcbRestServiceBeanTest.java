@@ -1,8 +1,8 @@
 package eu.europa.ec.fisheries.uvms.sales.proxy.ecb.bean;
 
 import com.google.common.base.Optional;
-import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.ParameterService;
-import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.constant.ParameterKey;
+import eu.europa.ec.fisheries.uvms.config.service.ParameterService;
+import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.domain.constant.ParameterKey;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.dto.DataSetDto;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.dto.ExchangeRate;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.dto.GenericDataDto;
@@ -60,7 +60,7 @@ public class EcbRestServiceBeanTest {
         genericDataDto.setDataSet(dataSetDto);
 
         //mock
-        doReturn("MyEndPoint").when(parameterService).getParameterValue(ParameterKey.ECB_ENDPOINT);
+        doReturn("MyEndPoint").when(parameterService).getStringValue(ParameterKey.ECB_ENDPOINT.getKey());
         mockStatic(ClientBuilder.class);
         mockStatic(GenericDataDtoMapper.class);
         Client client = mock(Client.class);
@@ -78,7 +78,7 @@ public class EcbRestServiceBeanTest {
         List<ExchangeRate> exchangeRates = ecbRestServiceBean.findExchangeRates(startDate);
 
         //verify and assert
-        verify(parameterService).getParameterValue(ParameterKey.ECB_ENDPOINT);
+        verify(parameterService).getStringValue(ParameterKey.ECB_ENDPOINT.getKey());
         verifyStatic();
         ClientBuilder.newClient();
         verify(client).target("MyEndPoint?startPeriod=2017-03-05");
@@ -107,7 +107,7 @@ public class EcbRestServiceBeanTest {
         genericDataDto.setDataSet(dataSetDto);
 
         //mock
-        doReturn("MyEndPoint").when(parameterService).getParameterValue(ParameterKey.ECB_ENDPOINT);
+        doReturn("MyEndPoint").when(parameterService).getStringValue(ParameterKey.ECB_ENDPOINT.getKey());
         mockStatic(ClientBuilder.class);
         mockStatic(GenericDataDtoMapper.class);
         Client client = mock(Client.class);
@@ -132,7 +132,7 @@ public class EcbRestServiceBeanTest {
         }
 
         //verify and assert
-        verify(parameterService).getParameterValue(ParameterKey.ECB_ENDPOINT);
+        verify(parameterService).getStringValue(ParameterKey.ECB_ENDPOINT.getKey());
         verifyStatic();
         ClientBuilder.newClient();
         verify(client).target("MyEndPoint?startPeriod=2017-03-05");
@@ -158,7 +158,7 @@ public class EcbRestServiceBeanTest {
         genericDataDto.setDataSet(dataSetDto);
 
         //mock
-        doReturn("MyEndPoint").when(parameterService).getParameterValue(ParameterKey.ECB_ENDPOINT);
+        doReturn("MyEndPoint").when(parameterService).getStringValue(ParameterKey.ECB_ENDPOINT.getKey());
         mockStatic(ClientBuilder.class);
         mockStatic(GenericDataDtoMapper.class);
         Client client = mock(Client.class);
@@ -183,7 +183,7 @@ public class EcbRestServiceBeanTest {
         }
 
         //verify and assert
-        verify(parameterService).getParameterValue(ParameterKey.ECB_ENDPOINT);
+        verify(parameterService).getStringValue(ParameterKey.ECB_ENDPOINT.getKey());
         verifyStatic();
         ClientBuilder.newClient();
         verify(client).target("MyEndPoint?startPeriod=2017-03-05");
@@ -209,7 +209,7 @@ public class EcbRestServiceBeanTest {
         genericDataDto.setDataSet(dataSetDto);
 
         //mock
-        doReturn("MyEndPoint").when(parameterService).getParameterValue(ParameterKey.ECB_ENDPOINT);
+        doReturn("MyEndPoint").when(parameterService).getStringValue(ParameterKey.ECB_ENDPOINT.getKey());
         mockStatic(ClientBuilder.class);
         mockStatic(GenericDataDtoMapper.class);
         Client client = mock(Client.class);
@@ -233,7 +233,7 @@ public class EcbRestServiceBeanTest {
         }
 
         //verify and assert
-        verify(parameterService).getParameterValue(ParameterKey.ECB_ENDPOINT);
+        verify(parameterService).getStringValue(ParameterKey.ECB_ENDPOINT.getKey());
         verifyStatic();
         ClientBuilder.newClient();
         verify(client).target("MyEndPoint?startPeriod=2017-03-05");

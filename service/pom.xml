@@ -22,30 +22,28 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>ma.glasnost.orika</groupId>
-            <artifactId>orika-core</artifactId>
-        </dependency>
-
         <!-- unionVMS dependencies -->
+        <dependency>
+            <groupId>eu.europa.ec.fisheries.uvms.sales</groupId>
+            <artifactId>sales-model</artifactId>
+        </dependency>
         <dependency>
             <groupId>eu.europa.ec.fisheries.uvms.sales</groupId>
             <artifactId>sales-proxy-ecb-domain</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>eu.europa.ec.fisheries.uvms.sales</groupId>
-            <artifactId>sales-model</artifactId>
-        </dependency>
-        <dependency>
             <groupId>eu.europa.ec.fisheries.uvms.commons</groupId>
             <artifactId>uvms-commons-message</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>eu.europa.ec.fisheries.uvms</groupId>
+            <artifactId>uvms-config</artifactId>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
-
         <!-- TEST -->
         <dependency>
             <groupId>org.powermock</groupId>

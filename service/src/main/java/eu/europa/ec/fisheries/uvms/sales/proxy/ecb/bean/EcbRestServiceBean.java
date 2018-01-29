@@ -1,9 +1,10 @@
 package eu.europa.ec.fisheries.uvms.sales.proxy.ecb.bean;
 
 import com.google.common.base.Optional;
+import eu.europa.ec.fisheries.uvms.config.exception.ConfigServiceException;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.EcbRestService;
-import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.ParameterService;
-import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.constant.ParameterKey;
+import eu.europa.ec.fisheries.uvms.config.service.ParameterService;
+import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.domain.constant.ParameterKey;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.dto.ExchangeRate;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.dto.GenericDataDto;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.exception.EcbProxyException;
@@ -68,8 +69,18 @@ public class EcbRestServiceBean implements EcbRestService {
             // Note that start date should be before today to obtain latest exchange rates
             throw new EcbProxyException("ECB exchange rate lookup start date should be before today");
         }
-        String ecbEndpoint = parameterService.getParameterValue(ParameterKey.ECB_ENDPOINT);
-        return ecbEndpoint + "?startPeriod=" + startDate.get().toString("YYYY-MM-dd");
+
+        return getEcbEndpointFromSettingsConfig() + "?startPeriod=" + startDate.get().toString("YYYY-MM-dd");
 
     }
+
+    private String getEcbEndpointFromSettingsConfig() throws EcbProxyException {
+        try {
+            return parameterService.getStringValue(ParameterKey.ECB_ENDPOINT.getKey());
+
+        } catch (ConfigServiceException e) {
+            throw new EcbProxyException("Unable to retrieve settings configuration for key: " + ParameterKey.ECB_ENDPOINT.getKey() + " Reason: " + e.getMessage());
+        }
+    }
+
 }
