@@ -1,4 +1,4 @@
-package eu.europa.ec.fisheries.uvms.sales.proxy.ecb.bean;
+package eu.europa.ec.fisheries.uvms.sales.proxy.ecb.schedule;
 
 import com.google.common.base.Optional;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.EcbRestService;

@@ -1,4 +1,4 @@
-package eu.europa.ec.fisheries.uvms.sales.proxy.ecb.bean;
+package eu.europa.ec.fisheries.uvms.sales.proxy.ecb.service.bean;
 
 import com.google.common.base.Optional;
 import eu.europa.ec.fisheries.uvms.config.service.ParameterService;
@@ -10,6 +10,7 @@ import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.dto.SeriesDto;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.exception.EcbProxyException;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.mapper.GenericDataDtoMapper;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.service.ExchangeRateService;
+import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.service.bean.EcbRestServiceBean;
 import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.junit.runner.RunWith;

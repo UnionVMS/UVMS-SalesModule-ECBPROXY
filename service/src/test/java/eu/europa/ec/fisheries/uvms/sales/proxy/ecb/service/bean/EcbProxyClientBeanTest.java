@@ -1,10 +1,11 @@
-package eu.europa.ec.fisheries.uvms.sales.proxy.ecb.bean;
+package eu.europa.ec.fisheries.uvms.sales.proxy.ecb.service.bean;
 
 import com.google.common.base.Optional;
 import eu.europa.ec.fisheries.schema.sales.proxy.ecb.types.v1.GetExchangeRateRequest;
 import eu.europa.ec.fisheries.schema.sales.proxy.ecb.types.v1.GetExchangeRateResponse;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.exception.EcbProxyException;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.service.ExchangeRateService;
+import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.service.bean.EcbProxyClientBean;
 import org.joda.time.LocalDate;
 import org.junit.Rule;
 import org.junit.Test;
