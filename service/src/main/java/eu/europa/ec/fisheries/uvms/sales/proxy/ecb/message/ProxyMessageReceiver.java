@@ -6,7 +6,7 @@ import eu.europa.ec.fisheries.schema.sales.proxy.ecb.types.v1.GetExchangeRateRes
 import eu.europa.ec.fisheries.uvms.commons.message.api.MessageConstants;
 import eu.europa.ec.fisheries.uvms.sales.model.exception.SalesMarshallException;
 import eu.europa.ec.fisheries.uvms.sales.model.mapper.JAXBMarshaller;
-import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.EcbProxyClient;
+import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.service.EcbProxyClient;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.constant.EcbProxyMessageConstants;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.event.EcbProxyErrorEvent;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.event.EcbProxyEventMessage;

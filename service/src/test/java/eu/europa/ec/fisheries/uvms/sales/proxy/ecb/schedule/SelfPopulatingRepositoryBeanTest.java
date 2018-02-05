@@ -1,7 +1,7 @@
 package eu.europa.ec.fisheries.uvms.sales.proxy.ecb.schedule;
 
 import com.google.common.base.Optional;
-import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.EcbRestService;
+import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.service.EcbRestService;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.dto.ExchangeRate;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.exception.EcbProxyException;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.service.ExchangeRateService;

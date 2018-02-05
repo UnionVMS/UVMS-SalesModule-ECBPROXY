@@ -1,4 +1,4 @@
-package eu.europa.ec.fisheries.uvms.sales.proxy.ecb;
+package eu.europa.ec.fisheries.uvms.sales.proxy.ecb.service;
 
 import eu.europa.ec.fisheries.schema.sales.proxy.ecb.types.v1.GetExchangeRateRequest;
 import eu.europa.ec.fisheries.schema.sales.proxy.ecb.types.v1.GetExchangeRateResponse;

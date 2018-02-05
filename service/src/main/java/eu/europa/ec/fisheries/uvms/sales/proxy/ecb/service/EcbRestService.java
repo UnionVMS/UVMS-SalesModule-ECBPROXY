@@ -1,4 +1,4 @@
-package eu.europa.ec.fisheries.uvms.sales.proxy.ecb;
+package eu.europa.ec.fisheries.uvms.sales.proxy.ecb.service;
 
 import com.google.common.base.Optional;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.dto.ExchangeRate;
