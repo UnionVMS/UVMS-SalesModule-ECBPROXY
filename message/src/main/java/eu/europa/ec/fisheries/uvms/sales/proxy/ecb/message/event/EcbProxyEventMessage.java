@@ -1,4 +1,4 @@
-package eu.europa.ec.fisheries.uvms.sales.proxy.ecb.event;
+package eu.europa.ec.fisheries.uvms.sales.proxy.ecb.message.event;
 
 import javax.jms.TextMessage;
 
