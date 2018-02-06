@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Stateless
-public class SalesConfigHelperBean implements ConfigHelper {
+public class EcbProxyConfigHelperBean implements ConfigHelper {
 
     @EJB
     private SalesConfigHelperDao salesConfigHelperDao;

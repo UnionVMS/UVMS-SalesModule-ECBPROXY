@@ -6,8 +6,10 @@
 package eu.europa.ec.fisheries.uvms.sales.proxy.ecb.constant;
 
 
-public interface ServiceConstants {
+public class ServiceConstants {
 
-    String SALES_ECB_PROCY_CONFIG_NAME = "sales-proxy-ecb";
+    private ServiceConstants() { }
+
+    public static final String SALES_ECB_PROCY_CONFIG_NAME = "sales-proxy-ecb";
 
 }
