@@ -27,7 +27,7 @@
         <sales.model.version>1.0.5</sales.model.version>
         <guava.version>20.0</guava.version>
         <orika.version>1.5.0</orika.version>
-        <uvms.commons.version>3.0.5</uvms.commons.version>
+        <uvms.commons.parent.version>3.0.9</uvms.commons.parent.version>
         <uvms.config.version>3.1.1</uvms.config.version>
         <jacoco.version>0.7.9</jacoco.version>
         <joda.time.version>2.9.7</joda.time.version>
@@ -53,7 +53,7 @@
             <dependency>
                 <groupId>eu.europa.ec.fisheries.uvms.commons</groupId>
                 <artifactId>uvms-commons-message</artifactId>
-                <version>${uvms.commons.version}</version>
+                <version>${uvms.commons.parent.version}</version>
             </dependency>
             <dependency>
                 <groupId>eu.europa.ec.fisheries.uvms</groupId>
