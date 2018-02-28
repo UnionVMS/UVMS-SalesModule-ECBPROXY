@@ -63,7 +63,7 @@
             <dependency>
                 <groupId>eu.europa.ec.fisheries.uvms.sales</groupId>
                 <artifactId>sales-proxy-ecb-message</artifactId>
-                <version>${sales.model.version}</version>
+                <version>${project.version}</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
