@@ -11,8 +11,13 @@
         <artifactId>sales-proxy-ecb</artifactId>
         <version>1.0.4-SNAPSHOT</version>
     </parent>
-    
+
     <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>sales-proxy-ecb-commons</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>eu.europa.ec.fisheries.uvms.sales</groupId>
             <artifactId>sales-model</artifactId>

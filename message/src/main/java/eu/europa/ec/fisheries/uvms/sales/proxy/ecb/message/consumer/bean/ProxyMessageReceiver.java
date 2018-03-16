@@ -2,6 +2,7 @@ package eu.europa.ec.fisheries.uvms.sales.proxy.ecb.message.consumer.bean;
 
 import eu.europa.ec.fisheries.schema.sales.proxy.ecb.types.v1.EcbProxyBaseRequest;
 import eu.europa.ec.fisheries.uvms.commons.message.api.MessageConstants;
+import eu.europa.ec.fisheries.uvms.commons.message.context.MappedDiagnosticContext;
 import eu.europa.ec.fisheries.uvms.sales.model.exception.SalesMarshallException;
 import eu.europa.ec.fisheries.uvms.sales.model.mapper.JAXBMarshaller;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.message.constants.SalesEcbProxyMessageConstants;
@@ -40,10 +41,11 @@ public class ProxyMessageReceiver implements MessageListener {
 
     @Override
     public void onMessage(Message message) {
-        LOG.debug("Received message in ProxyMessageReceiver of ECB Proxy");
+        LOG.info("Received message in ProxyMessageReceiver of ECB Proxy");
         TextMessage requestMessage = null;
         try {
             requestMessage = (TextMessage) message;
+            MappedDiagnosticContext.addMessagePropertiesToThreadMappedDiagnosticContext(requestMessage);
             EcbProxyBaseRequest request = JAXBMarshaller.unmarshallTextMessage(requestMessage, EcbProxyBaseRequest.class);
             if (request.getMethod() == GET_EXCHANGE_RATE) {
                 getExchangeRateEvent.fire(new EcbProxyEventMessage(requestMessage, null));
