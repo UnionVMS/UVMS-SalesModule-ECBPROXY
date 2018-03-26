@@ -29,21 +29,29 @@ public class EventServiceBean implements EventService {
     @Override
     public void getExchangeRate(@Observes @EcbProxyGetExchangeRateEvent EcbProxyEventMessage event) {
         log.info("Get exchange rate");
+        GetExchangeRateResponse getExchangeRateResponse = null;
         try {
-            GetExchangeRateResponse getExchangeRateResponse = client.getExchangeRate(getGetExchangeRateRequest(event));
-            responseMessageProducerBean.sendModuleResponseMessage(event.getRequestMessage(),
-                    getExchangeRateResponseAsString(getExchangeRateResponse));
+            getExchangeRateResponse = client.getExchangeRate(getGetExchangeRateRequest(event));
 
         } catch (Exception e) {
             String errorMessage = "Unable to process get exchange rate request in ECB proxy. Reason: " + e.getMessage();
             log.error(errorMessage, e);
-            responseMessageProducerBean.sendModuleResponseMessage(event.getRequestMessage(), errorMessage);
+            sendErrorResponse(event, errorMessage);
+            return;
+        }
+
+        try {
+            responseMessageProducerBean.sendResponseMessageToSender(event.getRequestMessage(),
+                    getExchangeRateResponseAsString(getExchangeRateResponse));
+
+        } catch (Exception e) {
+            log.error("Unable to send GetExchangeRateResponse response message. Reason: " + e.getMessage());
         }
     }
 
     public void returnError(@Observes @EcbProxyErrorEvent EcbProxyEventMessage event) {
         try {
-            responseMessageProducerBean.sendModuleResponseMessage(event.getRequestMessage(), event.getResponseMessage());
+            responseMessageProducerBean.sendResponseMessageToSender(event.getRequestMessage(), event.getResponseMessage());
 
         } catch (Exception e) {
             String errorMessage = "Unable to send ECB proxy get exchange rate error response. Reason: " + e.getMessage();
@@ -59,4 +67,12 @@ public class EventServiceBean implements EventService {
         return JAXBMarshaller.marshallJaxBObjectToString(getExchangeRateResponse);
     }
 
+    private void sendErrorResponse(EcbProxyEventMessage event, String errorMessage) {
+        try {
+            responseMessageProducerBean.sendResponseMessageToSender(event.getRequestMessage(), errorMessage);
+
+        } catch (Exception e) {
+            log.error("Unable to send error response message. Reason: " + e.getMessage());
+        }
+    }
 }

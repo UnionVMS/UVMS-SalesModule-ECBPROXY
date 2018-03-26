@@ -188,19 +188,18 @@ public class SelfPopulatingRepositoryBeanTest {
     @Test
     public void testInitializeFirstTimePopulateCurrencyExchangeRateTableForEmptyRatesRepository() throws Exception {
         //data set
-        LocalDate todayMinusThreeMonths = LocalDate.now().minusMonths(3);
-        LocalDate mostRecentExchangeRateDate = new LocalDate(2018, 1, 16);
+        LocalDate startDate = LocalDate.now().minusDays(1).minusMonths(3).plusDays(1);
         ExchangeRate exchangeRate = new ExchangeRate();
         exchangeRate.setRate(new BigDecimal(1.68));
         exchangeRate.setSourceCurrency("NZD");
         exchangeRate.setTargetCurrency("EUR");
-        exchangeRate.setStartDate(todayMinusThreeMonths);
+        exchangeRate.setStartDate(startDate);
         ArrayList<ExchangeRate> exchangeRates = new ArrayList<>();
         exchangeRates.add(exchangeRate);
 
         //mock
         doReturn(Optional.absent()).when(exchangeRateService).getMostRecentExchangeRateDate();
-        doReturn(exchangeRates).when(ecbRestService).findExchangeRates(Optional.of(todayMinusThreeMonths));
+        doReturn(exchangeRates).when(ecbRestService).findExchangeRates(Optional.of(startDate));
         doNothing().when(exchangeRateService).persistExchangeRates(exchangeRates);
 
         //execute
@@ -208,7 +207,7 @@ public class SelfPopulatingRepositoryBeanTest {
 
         //verify and assert
         verify(exchangeRateService).getMostRecentExchangeRateDate();
-        verify(ecbRestService).findExchangeRates(Optional.of(todayMinusThreeMonths));
+        verify(ecbRestService).findExchangeRates(Optional.of(startDate));
         verify(exchangeRateService).persistExchangeRates(exchangeRates);
         verifyNoMoreInteractions(ecbRestService, exchangeRateService, timer);
     }
