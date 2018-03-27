@@ -61,21 +61,6 @@
         </profile>
 
         <profile>
-            <id>postgres</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <properties>
-                <db.driver>org.postgresql.Driver</db.driver>
-                <db.changeLogFile>changelog/db-changelog-master.xml</db.changeLogFile>
-                <db.outputFile>changelog/generatedChangelog.xml</db.outputFile>
-                <driver.groupId>org.postgresql</driver.groupId>
-                <driver.artifactId>postgresql</driver.artifactId>
-                <driver.version>9.4-1201-jdbc41</driver.version>
-            </properties>
-        </profile>
-
-        <profile>
             <id>belgium-local</id>
             <properties>
                 <db.url>jdbc:postgresql://dbunid02/duvms</db.url>
@@ -109,6 +94,7 @@
                 <liquibase.contexts>test</liquibase.contexts>
             </properties>
         </profile>
+
         <profile>
             <id>publish-sql</id>
             <build>
