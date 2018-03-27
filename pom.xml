@@ -230,6 +230,7 @@
 
     <modules>
 		<module>commons</module>
+        <module>liquibase</module>
         <module>domain</module>
         <module>message</module>
         <module>service</module>
