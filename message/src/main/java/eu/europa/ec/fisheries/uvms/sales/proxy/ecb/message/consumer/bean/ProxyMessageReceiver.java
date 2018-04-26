@@ -11,6 +11,7 @@ import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.message.event.EcbProxyEventMe
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.message.event.EcbProxyGetExchangeRateEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;
@@ -41,6 +42,7 @@ public class ProxyMessageReceiver implements MessageListener {
 
     @Override
     public void onMessage(Message message) {
+        MDC.remove("requestId");
         LOG.info("Received message in ProxyMessageReceiver of ECB Proxy");
         TextMessage requestMessage = null;
         try {

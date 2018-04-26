@@ -41,6 +41,7 @@ public class EventServiceBean implements EventService {
         }
 
         try {
+            log.info("Send exchange rate response");
             responseMessageProducerBean.sendResponseMessageToSender(event.getRequestMessage(),
                     getExchangeRateResponseAsString(getExchangeRateResponse));
 
