@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <exchange_rate
+            id="1"
+            start_date="2018-01-14 01:00:00"
+            source_currency="NZD"
+            target_currency="EUR"
+            rate = "1.68"
+            creation="2018-01-16 09:00:00"
+    />
+    <exchange_rate
+            id="2"
+            start_date="2018-01-15 01:00:00"
+            source_currency="NZD"
+            target_currency="EUR"
+            rate = "1.67"
+            creation="2018-01-16 09:00:00"
+    />
+    <exchange_rate
+            id="3"
+            start_date="2018-01-16 01:00:00"
+            source_currency="NZD"
+            target_currency="EUR"
+            rate = "1.69"
+            creation="2018-01-16 09:00:00"
+    />
+    <exchange_rate
+            id="4"
+            start_date="2018-01-15 01:00:00"
+            source_currency="HUF"
+            target_currency="EUR"
+            rate = "309.2"
+            creation="2018-01-16 09:00:00"
+    />
+</dataset>

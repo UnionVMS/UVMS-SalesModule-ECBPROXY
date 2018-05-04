@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet author="krisch" id="fres-01">
+
+        <createTable tableName="exchange_rate">
+            <column name="id" type="integer">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="exchange_rate_pk"/>
+            </column>
+			<column name="start_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="source_currency" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="target_currency" type="text">
+                <constraints nullable="false"/>
+            </column>
+			<column name="rate" type="numeric" >
+                <constraints nullable="false"/>
+            </column>
+            <column name="creation" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createSequence sequenceName="exchange_rate_id_seq"
+                        incrementBy="50"/>
+        <addDefaultValue columnName="id" tableName="exchange_rate" defaultValueSequenceNext="exchange_rate_id_seq"/>
+
+		<addUniqueConstraint columnNames="start_date,source_currency,target_currency"
+                             constraintName="exchange_rate_rate_un"
+                             tableName="exchange_rate" />
+
+        <rollback>
+            <dropSequence sequenceName="exchange_rate_id_seq"/>
+            <dropTable tableName="exchange_rate" cascadeConstraints="true"/>
+        </rollback>
+
+    </changeSet>
+
+</databaseChangeLog>
