@@ -9,8 +9,7 @@ import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.message.constants.SalesEcbPro
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.message.event.EcbProxyErrorEvent;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.message.event.EcbProxyEventMessage;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.message.event.EcbProxyGetExchangeRateEvent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 
 import javax.ejb.ActivationConfigProperty;
@@ -28,9 +27,8 @@ import static eu.europa.ec.fisheries.schema.sales.proxy.ecb.types.v1.EcbProxyReq
         @ActivationConfigProperty(propertyName = "destinationType", propertyValue = MessageConstants.DESTINATION_TYPE_QUEUE),
         @ActivationConfigProperty(propertyName = "destination", propertyValue = SalesEcbProxyMessageConstants.QUEUE_NAME)
 })
+@Slf4j
 public class ProxyMessageReceiver implements MessageListener {
-
-    private static final Logger LOG = LoggerFactory.getLogger(ProxyMessageReceiver.class);
 
     @Inject
     @EcbProxyErrorEvent
@@ -43,7 +41,7 @@ public class ProxyMessageReceiver implements MessageListener {
     @Override
     public void onMessage(Message message) {
         MDC.remove("requestId");
-        LOG.info("Received message in ProxyMessageReceiver of ECB Proxy");
+        log.debug("Received message in ProxyMessageReceiver of ECB Proxy");
         TextMessage requestMessage = null;
         try {
             requestMessage = (TextMessage) message;
@@ -54,12 +52,12 @@ public class ProxyMessageReceiver implements MessageListener {
                 return;
             }
             String errorMessage = "Unknown method for received message in ECB Proxy, method: " + request.getMethod().name();
-            LOG.error(errorMessage);
+            log.error(errorMessage);
             errorEvent.fire(new EcbProxyEventMessage(requestMessage, errorMessage));
 
         } catch (SalesMarshallException e) {
             String errorMessage = "Invalid message received in ECB proxy";
-            LOG.error(errorMessage);
+            log.error(errorMessage);
             errorEvent.fire(new EcbProxyEventMessage(requestMessage, errorMessage));
         }
     }
