@@ -10,7 +10,7 @@
     
     <groupId>eu.europa.ec.fisheries.uvms.sales</groupId>
     <artifactId>sales-proxy-ecb</artifactId>
-    <version>1.0.4</version>
+    <version>1.0.5</version>
 
     <packaging>pom</packaging>
 
@@ -28,7 +28,7 @@
         <guava.version>20.0</guava.version>
         <orika.version>1.5.0</orika.version>
         <uvms.commons.version>3.0.17</uvms.commons.version>
-        <uvms.config.version>4.0.0</uvms.config.version>
+        <uvms.config.version>4.0.1</uvms.config.version>
         <jacoco.version>0.7.9</jacoco.version>
         <joda.time.version>2.9.7</joda.time.version>
         <lombok.version>1.16.18</lombok.version>
@@ -170,7 +170,7 @@
     </distributionManagement>
     <scm>
         <connection>${scm.connection}</connection>
-        <tag>sales-proxy-ecb-1.0.4</tag>
+        <tag>sales-proxy-ecb-1.0.5</tag>
     </scm>
 
     <profiles>

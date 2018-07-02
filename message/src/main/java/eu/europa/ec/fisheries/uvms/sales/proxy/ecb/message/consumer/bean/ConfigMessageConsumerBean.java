@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 
 @Stateless
 public class ConfigMessageConsumerBean implements ConfigMessageConsumer {
@@ -20,6 +22,7 @@ public class ConfigMessageConsumerBean implements ConfigMessageConsumer {
     private MessageConsumer salesEcbProxyMessageConsumer;
 
     @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public <T> T getConfigMessage(String correlationId, Class type) throws ConfigMessageException {
         try {
             return salesEcbProxyMessageConsumer.getMessage(correlationId, type, TIMEOUT);
