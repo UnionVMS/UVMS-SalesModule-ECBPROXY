@@ -33,6 +33,7 @@
         <joda.time.version>2.9.7</joda.time.version>
         <lombok.version>1.16.18</lombok.version>
         <commons-lang.version>2.6</commons-lang.version>
+        <xmlunit-core.version>2.5.0</xmlunit-core.version>
         <scm.connection>scm:git:https://github.com/UnionVMS/UVMS-SalesModule-ECBPROXY.git</scm.connection>
     </properties>
 
@@ -90,6 +91,11 @@
                 <groupId>org.powermock</groupId>
                 <artifactId>powermock-api-mockito2</artifactId>
                 <version>${powermock.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.xmlunit</groupId>
+                <artifactId>xmlunit-core</artifactId>
+                <version>${xmlunit-core.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -235,5 +241,6 @@
         <module>message</module>
         <module>service</module>
         <module>module</module>
+        <module>integration-tests</module>
     </modules>
 </project>

@@ -1,0 +1,7 @@
+<dataset>
+    <exchange_rate id="594" start_date="2018-08-09 00:00:00.000000" source_currency="DKK" target_currency="EUR" rate="7.4566" creation="2018-08-10 11:08:17.726000" />
+    <exchange_rate id="2385" start_date="2018-08-10 00:00:00.000000" source_currency="DKK" target_currency="EUR" rate="7.4544" creation="2018-08-11 00:00:05.797000" />
+    <exchange_rate id="2421" start_date="2018-08-13 00:00:00.000000" source_currency="DKK" target_currency="EUR" rate="7.4536" creation="2018-08-13 14:30:00.092000" />
+    <exchange_rate id="2384" start_date="2018-08-10 00:00:00.000000" source_currency="ARS" target_currency="EUR" rate="28.3576" creation="2018-08-11 00:00:05.797000" />
+    <exchange_rate id="2383" start_date="2018-08-10 00:00:00.000000" source_currency="ZAR" target_currency="EUR" rate="15.821" creation="2018-08-11 00:00:05.797000" />
+</dataset>

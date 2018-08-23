@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>sales-proxy-ecb-integration-tests</artifactId>
+    <name>sales-proxy-ecb-integration-tests</name>
+    <packaging>jar</packaging>
+
+    <parent>
+        <groupId>eu.europa.ec.fisheries.uvms.sales</groupId>
+        <artifactId>sales-proxy-ecb</artifactId>
+        <version>1.0.6-SNAPSHOT</version>
+    </parent>
+
+    <properties>
+        <!-- PROPERTIES USED FOR LOGBACK -->
+        <application.name>${project.parent.artifactId}</application.name>
+        <application.version>${project.parent.version}</application.version>
+        <application.logfile>/app/logs/${project.artifactId}/${project.artifactId}.log</application.logfile>
+        <application.error.logfile>/app/logs/${project.artifactId}/${project.artifactId}-error.log</application.error.logfile>
+        <integration.tests.hibernate.dialect>org.hibernate.dialect.H2Dialect</integration.tests.hibernate.dialect>
+        <integration.tests.hibernate.hbm2ddl.auto>create</integration.tests.hibernate.hbm2ddl.auto>
+        <integration.tests.wildfly-remote.host>localhost</integration.tests.wildfly-remote.host>
+        <integration.tests.wildfly-remote.port>8080</integration.tests.wildfly-remote.port>
+        <integration.tests.wildfly-remote.managementPort>9990</integration.tests.wildfly-remote.managementPort>
+        <awaitilitiy.version>3.0.0</awaitilitiy.version>
+        <skipTests>false</skipTests>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Arquillian BOM (Bill Of Materials). -->
+            <dependency>
+                <groupId>org.jboss.arquillian</groupId>
+                <artifactId>arquillian-bom</artifactId>
+                <version>1.1.6.Final</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- extension to start transactions in tests -->
+            <dependency>
+                <groupId>org.jboss.arquillian.extension</groupId>
+                <artifactId>arquillian-transaction-bom</artifactId>
+                <version>1.0.5</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>sales-model</artifactId>
+        </dependency>
+<!-- "ks"	
+        <dependency>
+            <groupId>eu.europa.ec.fisheries.uvms.asset</groupId>
+            <artifactId>asset-model</artifactId>
+            <classifier>date</classifier>
+        </dependency>
+        <dependency>
+            <groupId>eu.europa.ec.fisheries.uvms.rules</groupId>
+            <artifactId>rules-model</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>eu.europa.ec.fisheries.uvms.mdr</groupId>
+            <artifactId>mdr-model</artifactId>
+        </dependency>
+"ks" -->
+
+        <dependency>
+            <groupId>eu.europa.ec.fisheries.uvms</groupId>
+            <artifactId>uvms-config</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>eu.europa.ec.fisheries.uvms.sales</groupId>
+            <artifactId>sales-proxy-ecb-domain</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>eu.europa.ec.fisheries.uvms.sales</groupId>
+            <artifactId>sales-proxy-ecb-message</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>eu.europa.ec.fisheries.uvms.sales</groupId>
+            <artifactId>sales-proxy-ecb-service</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>eu.europa.ec.fisheries.uvms.commons</groupId>
+            <artifactId>uvms-commons-message</artifactId>
+        </dependency>
+
+        <!-- "ks"
+                <dependency>
+                    <groupId>${project.groupId}</groupId>
+                    <artifactId>sales-domain</artifactId>
+                    <version>${project.version}</version>
+                    <scope>provided</scope>
+                </dependency>
+                <dependency>
+                    <groupId>${project.groupId}</groupId>
+                    <artifactId>sales-message</artifactId>
+                    <version>${project.version}</version>
+                    <scope>provided</scope>
+                </dependency>
+                <dependency>
+                    <groupId>${project.groupId}</groupId>
+                    <artifactId>sales-service</artifactId>
+                    <version>${project.version}</version>
+                    <scope>provided</scope>
+                </dependency>
+                <dependency>
+                    <groupId>eu.europa.ec.fisheries.uvms.exchange</groupId>
+                    <artifactId>exchange-model</artifactId>
+                </dependency>
+
+                <dependency>
+                    <groupId>ma.glasnost.orika</groupId>
+                    <artifactId>orika-core</artifactId>
+                </dependency>
+        "ks" -->
+
+        <!-- Maven resolver -->
+        <dependency>
+            <groupId>org.jboss.shrinkwrap.resolver</groupId>
+            <artifactId>shrinkwrap-resolver-impl-maven</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- extension to start transactions in tests -->
+        <dependency>
+            <groupId>org.jboss.arquillian.extension</groupId>
+            <artifactId>arquillian-transaction-jta</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- JUnit Container Implementation for the Arquillian Project -->
+        <dependency>
+            <groupId>org.jboss.arquillian.junit</groupId>
+            <artifactId>arquillian-junit-container</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.arquillian.protocol</groupId>
+            <artifactId>arquillian-protocol-servlet</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- dbunit for Arquillian -->
+        <dependency>
+            <groupId>org.jboss.arquillian.extension</groupId>
+            <artifactId>arquillian-persistence-dbunit</artifactId>
+            <version>1.0.0.Alpha7</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.wildfly</groupId>
+            <artifactId>wildfly-arquillian-container-remote</artifactId>
+            <version>8.2.1.Final</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.inject</groupId>
+                    <artifactId>javax.inject</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>sun.jdk</groupId>
+                    <artifactId>jconsole</artifactId>
+                </exclusion>
+            </exclusions>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.awaitility</groupId>
+            <artifactId>awaitility</artifactId>
+            <version>${awaitilitiy.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.xmlunit</groupId>
+            <artifactId>xmlunit-core</artifactId>
+        </dependency>
+
+    </dependencies>
+    
+    <build>
+        <finalName>${project.name}-${project.version}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <version>1.0.0</version>
+                <executions>
+                    <execution>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>write-project-properties</goal>
+                        </goals>
+                        <configuration>
+                            <outputFile>${basedir}/src/test/resources/logging.properties</outputFile>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+            </plugin>
+        </plugins>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+            </testResource>
+        </testResources>
+    </build>
+
+    <profiles>
+        <profile>
+            <!-- Arquillian integration tests for remote non-managed wildfly server -->
+            <!-- Required module deployments: user, config, exchange and audit -->
+            <id>arquillian</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <configuration>
+                            <includes>
+                                <include>**/*IT</include>
+                            </includes>
+                            <skipITs>${skipTests}</skipITs>
+                            <excludes>
+                                <exclude>${excludeTest}</exclude>
+                            </excludes>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>integration-test</goal>
+                                    <goal>verify</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>jenkins</id>
+            <properties>
+                <integration.tests.hibernate.dialect>org.hibernate.dialect.PostgreSQLDialect</integration.tests.hibernate.dialect>
+                <integration.tests.hibernate.hbm2ddl.auto />
+                <integration.tests.wildfly-remote.host />
+                <integration.tests.wildfly-remote.port>8080</integration.tests.wildfly-remote.port>
+                <integration.tests.wildfly-remote.managementPort>9990</integration.tests.wildfly-remote.managementPort>
+            </properties>
+        </profile>
+    </profiles>
+
+</project>
