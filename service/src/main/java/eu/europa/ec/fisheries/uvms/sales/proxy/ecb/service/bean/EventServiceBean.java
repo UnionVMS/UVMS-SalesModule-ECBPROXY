@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.enterprise.event.Observes;
+import javax.jms.DeliveryMode;
 
 @Slf4j
 @Stateless
@@ -43,16 +44,16 @@ public class EventServiceBean implements EventService {
         try {
             log.info("Send exchange rate response");
             responseMessageProducerBean.sendResponseMessageToSender(event.getRequestMessage(),
-                    getExchangeRateResponseAsString(getExchangeRateResponse));
+                    getExchangeRateResponseAsString(getExchangeRateResponse), 60000, DeliveryMode.NON_PERSISTENT);
 
         } catch (Exception e) {
-            log.error("Unable to send GetExchangeRateResponse response message. Reason: " + e.getMessage());
+            log.error("Unable to send GetExchangeRateResponse response message.", e);
         }
     }
 
     public void returnError(@Observes @EcbProxyErrorEvent EcbProxyEventMessage event) {
         try {
-            responseMessageProducerBean.sendResponseMessageToSender(event.getRequestMessage(), event.getResponseMessage());
+            responseMessageProducerBean.sendResponseMessageToSender(event.getRequestMessage(), event.getResponseMessage(), 60000, DeliveryMode.NON_PERSISTENT);
 
         } catch (Exception e) {
             String errorMessage = "Unable to send ECB proxy get exchange rate error response. Reason: " + e.getMessage();
@@ -70,10 +71,9 @@ public class EventServiceBean implements EventService {
 
     private void sendErrorResponse(EcbProxyEventMessage event, String errorMessage) {
         try {
-            responseMessageProducerBean.sendResponseMessageToSender(event.getRequestMessage(), errorMessage);
-
+            responseMessageProducerBean.sendResponseMessageToSender(event.getRequestMessage(), errorMessage, 60000, DeliveryMode.NON_PERSISTENT);
         } catch (Exception e) {
-            log.error("Unable to send error response message. Reason: " + e.getMessage());
+            log.error("Unable to send error response message. ", e);
         }
     }
 }
