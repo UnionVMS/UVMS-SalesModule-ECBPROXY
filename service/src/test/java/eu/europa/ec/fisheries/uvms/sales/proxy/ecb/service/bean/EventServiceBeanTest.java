@@ -16,6 +16,7 @@ import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import javax.jms.DeliveryMode;
 import javax.jms.TextMessage;
 
 import static org.mockito.Mockito.*;
@@ -39,7 +40,6 @@ public class EventServiceBeanTest {
     @Test
     public void testGetExchangeRateAndSendResponse() throws Exception {
         //data set
-        String responseMessage = null;
         GetExchangeRateRequest getExchangeRateRequest = new GetExchangeRateRequest();
         GetExchangeRateResponse getExchangeRateResponse = new GetExchangeRateResponse();
         String responseAsString = "MyResponseAsString";
@@ -50,10 +50,10 @@ public class EventServiceBeanTest {
         when(JAXBMarshaller.unmarshallTextMessage(requestMessageMock, GetExchangeRateRequest.class)).thenReturn(getExchangeRateRequest);
         doReturn(getExchangeRateResponse).when(ecbProxyClient).getExchangeRate(getExchangeRateRequest);
         when(JAXBMarshaller.marshallJaxBObjectToString(getExchangeRateResponse)).thenReturn(responseAsString);
-        doNothing().when(responseMessageProducerBean).sendResponseMessageToSender(requestMessageMock, responseAsString);
+        doNothing().when(responseMessageProducerBean).sendResponseMessageToSender(requestMessageMock, responseAsString, 60000, DeliveryMode.NON_PERSISTENT);
 
         //execute
-        EcbProxyEventMessage ecbProxyEventMessage = new EcbProxyEventMessage(requestMessageMock, responseMessage);
+        EcbProxyEventMessage ecbProxyEventMessage = new EcbProxyEventMessage(requestMessageMock, null);
         eventServiceBean.getExchangeRate(ecbProxyEventMessage);
 
         //verify and assert
@@ -62,7 +62,7 @@ public class EventServiceBeanTest {
         verify(ecbProxyClient).getExchangeRate(getExchangeRateRequest);
         verifyStatic();
         JAXBMarshaller.marshallJaxBObjectToString(getExchangeRateResponse);
-        verify(responseMessageProducerBean).sendResponseMessageToSender(requestMessageMock, responseAsString);
+        verify(responseMessageProducerBean).sendResponseMessageToSender(requestMessageMock, responseAsString, 60000, DeliveryMode.NON_PERSISTENT);
         verifyNoMoreInteractions(responseMessageProducerBean, ecbProxyClient, requestMessageMock);
     }
 
@@ -80,7 +80,7 @@ public class EventServiceBeanTest {
         when(JAXBMarshaller.unmarshallTextMessage(requestMessageMock, GetExchangeRateRequest.class)).thenReturn(getExchangeRateRequest);
         doReturn(getExchangeRateResponse).when(ecbProxyClient).getExchangeRate(getExchangeRateRequest);
         when(JAXBMarshaller.marshallJaxBObjectToString(getExchangeRateResponse)).thenReturn(responseAsString);
-        doThrow(new RuntimeException("MyRuntimeException")).when(responseMessageProducerBean).sendResponseMessageToSender(requestMessageMock, responseAsString);
+        doThrow(new RuntimeException("MyRuntimeException")).when(responseMessageProducerBean).sendResponseMessageToSender(requestMessageMock, responseAsString, 60000, DeliveryMode.NON_PERSISTENT);
 
         //execute
         EcbProxyEventMessage ecbProxyEventMessage = new EcbProxyEventMessage(requestMessageMock, responseMessage);
@@ -92,7 +92,7 @@ public class EventServiceBeanTest {
         verify(ecbProxyClient).getExchangeRate(getExchangeRateRequest);
         verifyStatic();
         JAXBMarshaller.marshallJaxBObjectToString(getExchangeRateResponse);
-        verify(responseMessageProducerBean).sendResponseMessageToSender(requestMessageMock, responseAsString);
+        verify(responseMessageProducerBean).sendResponseMessageToSender(requestMessageMock, responseAsString, 60000, DeliveryMode.NON_PERSISTENT);
         verifyNoMoreInteractions(responseMessageProducerBean, ecbProxyClient, requestMessageMock);
     }
 
@@ -110,7 +110,7 @@ public class EventServiceBeanTest {
         mockStatic(JAXBMarshaller.class);
         when(JAXBMarshaller.unmarshallTextMessage(requestMessageMock, GetExchangeRateRequest.class)).thenReturn(getExchangeRateRequest);
         doThrow(new EcbProxyException("MyEcbProxyException")).when(ecbProxyClient).getExchangeRate(getExchangeRateRequest);
-        doNothing().when(responseMessageProducerBean).sendResponseMessageToSender(requestMessageMock, errorResponseAsString);
+        doNothing().when(responseMessageProducerBean).sendResponseMessageToSender(requestMessageMock, errorResponseAsString, 60000, DeliveryMode.NON_PERSISTENT);
 
         //execute
         EcbProxyEventMessage ecbProxyEventMessage = new EcbProxyEventMessage(requestMessageMock, responseMessage);
@@ -120,7 +120,7 @@ public class EventServiceBeanTest {
         verifyStatic();
         JAXBMarshaller.unmarshallTextMessage(requestMessageMock, GetExchangeRateRequest.class);
         verify(ecbProxyClient).getExchangeRate(getExchangeRateRequest);
-        verify(responseMessageProducerBean).sendResponseMessageToSender(requestMessageMock, errorResponseAsString);
+        verify(responseMessageProducerBean).sendResponseMessageToSender(requestMessageMock, errorResponseAsString, 60000, DeliveryMode.NON_PERSISTENT);
         verifyNoMoreInteractions(responseMessageProducerBean, ecbProxyClient, requestMessageMock);
     }
 
@@ -138,7 +138,7 @@ public class EventServiceBeanTest {
         mockStatic(JAXBMarshaller.class);
         when(JAXBMarshaller.unmarshallTextMessage(requestMessageMock, GetExchangeRateRequest.class)).thenReturn(getExchangeRateRequest);
         doThrow(new EcbProxyException("MyEcbProxyException")).when(ecbProxyClient).getExchangeRate(getExchangeRateRequest);
-        doThrow(new MessageException("MyMessageException")).when(responseMessageProducerBean).sendResponseMessageToSender(requestMessageMock, errorResponseAsString);
+        doThrow(new MessageException("MyMessageException")).when(responseMessageProducerBean).sendResponseMessageToSender(requestMessageMock, errorResponseAsString, 60000, DeliveryMode.NON_PERSISTENT);
 
         //execute
         EcbProxyEventMessage ecbProxyEventMessage = new EcbProxyEventMessage(requestMessageMock, responseMessage);
@@ -148,7 +148,7 @@ public class EventServiceBeanTest {
         verifyStatic();
         JAXBMarshaller.unmarshallTextMessage(requestMessageMock, GetExchangeRateRequest.class);
         verify(ecbProxyClient).getExchangeRate(getExchangeRateRequest);
-        verify(responseMessageProducerBean).sendResponseMessageToSender(requestMessageMock, errorResponseAsString);
+        verify(responseMessageProducerBean).sendResponseMessageToSender(requestMessageMock, errorResponseAsString, 60000, DeliveryMode.NON_PERSISTENT);
         verifyNoMoreInteractions(responseMessageProducerBean, ecbProxyClient, requestMessageMock);
     }
 
@@ -159,14 +159,14 @@ public class EventServiceBeanTest {
 
         //mock
         TextMessage requestMessageMock = mock(TextMessage.class);
-        doNothing().when(responseMessageProducerBean).sendResponseMessageToSender(requestMessageMock, errorResponseAsString);
+        doNothing().when(responseMessageProducerBean).sendResponseMessageToSender(requestMessageMock, errorResponseAsString, 60000, DeliveryMode.NON_PERSISTENT);
 
         //execute
         EcbProxyEventMessage ecbProxyEventMessage = new EcbProxyEventMessage(requestMessageMock, errorResponseAsString);
         eventServiceBean.returnError(ecbProxyEventMessage);
 
         //verify and assert
-        verify(responseMessageProducerBean).sendResponseMessageToSender(requestMessageMock, errorResponseAsString);
+        verify(responseMessageProducerBean).sendResponseMessageToSender(requestMessageMock, errorResponseAsString, 60000, DeliveryMode.NON_PERSISTENT);
         verifyNoMoreInteractions(responseMessageProducerBean, ecbProxyClient, requestMessageMock);
     }
 
@@ -178,14 +178,14 @@ public class EventServiceBeanTest {
         //mock
         TextMessage requestMessageMock = mock(TextMessage.class);
         doThrow(new RuntimeException("MyRuntimeException")).when(responseMessageProducerBean).
-                sendResponseMessageToSender(requestMessageMock, errorResponseAsString);
+                sendResponseMessageToSender(requestMessageMock, errorResponseAsString, 60000, DeliveryMode.NON_PERSISTENT);
 
         //execute
         EcbProxyEventMessage ecbProxyEventMessage = new EcbProxyEventMessage(requestMessageMock, errorResponseAsString);
         eventServiceBean.returnError(ecbProxyEventMessage);
 
         //verify and assert
-        verify(responseMessageProducerBean).sendResponseMessageToSender(requestMessageMock, errorResponseAsString);
+        verify(responseMessageProducerBean).sendResponseMessageToSender(requestMessageMock, errorResponseAsString, 60000, DeliveryMode.NON_PERSISTENT);
         verifyNoMoreInteractions(responseMessageProducerBean, ecbProxyClient, requestMessageMock);
     }
 
