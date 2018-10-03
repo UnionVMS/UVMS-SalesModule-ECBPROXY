@@ -8,7 +8,6 @@ import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.jms.*;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
@@ -48,12 +47,8 @@ public class SalesEcbProxyServiceTestHelper {
         }
     }
 
-    public TextMessage receiveTextMessage(Destination receiveFromDestination, String correlationId) {
-        boolean hasMessageExpirySet = false;
-        return receiveTextMessage(receiveFromDestination, correlationId, hasMessageExpirySet);
-    }
 
-    private TextMessage receiveTextMessage(Destination receiveFromDestination, String correlationId, boolean hasMessageExpirySet) {
+    public TextMessage receiveTextMessage(Destination receiveFromDestination, String correlationId) {
         assertNotNull(correlationId);
         try (Connection connection = connectionFactory.createConnection();
             Session session = JMSUtils.connectToQueue(connection);
@@ -63,7 +58,6 @@ public class SalesEcbProxyServiceTestHelper {
                 log.error("Message consumer timeout is reached");
                 return null;
             }
-            assertEquals(hasMessageExpirySet, (receivedMessage.getJMSExpiration() > 0));
             return (TextMessage) receivedMessage;
 
         } catch (Exception e) {

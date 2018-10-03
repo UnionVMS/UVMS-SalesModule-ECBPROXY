@@ -10,7 +10,10 @@ import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.service.ExchangeRateService;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.junit.InSequence;
-import org.jboss.arquillian.persistence.*;
+import org.jboss.arquillian.persistence.Cleanup;
+import org.jboss.arquillian.persistence.DataSource;
+import org.jboss.arquillian.persistence.TestExecutionPhase;
+import org.jboss.arquillian.persistence.UsingDataSet;
 import org.jboss.arquillian.transaction.api.annotation.TransactionMode;
 import org.jboss.arquillian.transaction.api.annotation.Transactional;
 import org.joda.time.DateTime;
@@ -24,7 +27,8 @@ import org.slf4j.LoggerFactory;
 import javax.ejb.EJB;
 import javax.jms.TextMessage;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(Arquillian.class)
 public class EcbProxyServiceTestIT extends TestOnGoodWorkingEcbProxy {
@@ -54,7 +58,7 @@ public class EcbProxyServiceTestIT extends TestOnGoodWorkingEcbProxy {
         //Give the Sales ecb proxy some time to boot itself properly
         Thread.sleep(60000);
 
-        //Use case 1: Asert Self populating ECB proxy repo using ECB WS endpoint
+        //Use case 1: Assert Self populating ECB proxy repo using ECB WS endpoint
         Optional<LocalDate> mostRecentExchangeRateDateOptional = exchangeRateService.getMostRecentExchangeRateDate();
         assertTrue(mostRecentExchangeRateDateOptional.isPresent());
         DateTime tillDateTime = DateTime.now();
