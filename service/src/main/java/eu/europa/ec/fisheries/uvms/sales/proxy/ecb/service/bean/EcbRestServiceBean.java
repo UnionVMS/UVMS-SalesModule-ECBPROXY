@@ -2,13 +2,13 @@ package eu.europa.ec.fisheries.uvms.sales.proxy.ecb.service.bean;
 
 import com.google.common.base.Optional;
 import eu.europa.ec.fisheries.uvms.config.exception.ConfigServiceException;
-import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.service.EcbRestService;
 import eu.europa.ec.fisheries.uvms.config.service.ParameterService;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.domain.constant.ParameterKey;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.dto.ExchangeRate;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.dto.GenericDataDto;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.exception.EcbProxyException;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.mapper.GenericDataDtoMapper;
+import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.service.EcbRestService;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.service.ExchangeRateService;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.LocalDate;
@@ -55,9 +55,9 @@ public class EcbRestServiceBean implements EcbRestService {
             log.error(errorMessage);
             throw new EcbProxyException(errorMessage);
         } catch (Exception e) {
-            String errorMessage = "Unable to retrieve ECB currency exchange rates. Reason: " + e.getStackTrace();
-            log.error(errorMessage);
-            throw new EcbProxyException(errorMessage);
+            String errorMessage = "Unable to retrieve ECB currency exchange rates.";
+            log.error(errorMessage, e);
+            throw new EcbProxyException(errorMessage, e);
         }
     }
 
