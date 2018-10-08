@@ -229,7 +229,7 @@ public class EcbRestServiceBeanTest {
             fail("findExchangeRates should fail for ResponseProcessingException");
 
         } catch(EcbProxyException e) {
-            assertTrue(e.getMessage().contains("Unable to retrieve ECB currency exchange rates. Reason:"));
+            assertTrue(e.getMessage().contains("Unable to retrieve ECB currency exchange rates."));
         }
 
         //verify and assert
