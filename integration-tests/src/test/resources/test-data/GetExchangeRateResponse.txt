@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<getExchangeRateResponse xmlns="urn:types.ecb-proxy.sales.schema.fisheries.ec.europa.eu:v1">
+    <sourceCurrency>DKK</sourceCurrency>
+    <targetCurrency>EUR</targetCurrency>
+    <date>2018-08-12T00:00:00Z</date>
+    <exchangeRate>7.4544</exchangeRate>
+</getExchangeRateResponse>
