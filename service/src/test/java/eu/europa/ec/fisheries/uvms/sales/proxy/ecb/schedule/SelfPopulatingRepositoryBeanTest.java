@@ -1,9 +1,9 @@
 package eu.europa.ec.fisheries.uvms.sales.proxy.ecb.schedule;
 
 import com.google.common.base.Optional;
-import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.service.EcbRestService;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.dto.ExchangeRate;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.exception.EcbProxyException;
+import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.service.EcbRestService;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.service.ExchangeRateService;
 import org.joda.time.LocalDate;
 import org.junit.Rule;
@@ -12,7 +12,7 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import javax.ejb.Timer;
 import java.math.BigDecimal;

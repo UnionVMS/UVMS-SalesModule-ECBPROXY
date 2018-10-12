@@ -1,6 +1,6 @@
 <configuration debug="false" scan="false" scanPeriod="60 seconds">
     
-    <property resource="logback.properties" />
+    <property resource="logging.properties" />
     
     <contextName>${application.name}</contextName>
     
