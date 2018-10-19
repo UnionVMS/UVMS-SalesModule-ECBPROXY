@@ -3,33 +3,28 @@ package eu.europa.ec.fisheries.uvms.sales.proxy.ecb.message.consumer.bean;
 import eu.europa.ec.fisheries.uvms.commons.message.api.MessageConsumer;
 import eu.europa.ec.fisheries.uvms.config.exception.ConfigMessageException;
 import eu.europa.ec.fisheries.uvms.config.message.ConfigMessageConsumer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 
 @Stateless
+@Slf4j
 public class ConfigMessageConsumerBean implements ConfigMessageConsumer {
 
     private static final long TIMEOUT = 30000;
-
-    static final Logger LOG = LoggerFactory.getLogger(ConfigMessageConsumerBean.class);
 
     @EJB
     private MessageConsumer salesEcbProxyMessageConsumer;
 
     @Override
-    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public <T> T getConfigMessage(String correlationId, Class type) throws ConfigMessageException {
         try {
             return salesEcbProxyMessageConsumer.getMessage(correlationId, type, TIMEOUT);
 
         } catch (Exception e) {
             String errorMessage = "Unable to retrieve config messages for the sales ecb proxy. Reason: " + e.getMessage();
-            LOG.error(errorMessage);
+            log.error(errorMessage);
             throw new ConfigMessageException(errorMessage);
         }
     }
