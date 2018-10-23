@@ -1,7 +1,12 @@
 package eu.europa.ec.fisheries.uvms.sales.proxy.ecb.mapper;
 
-import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.dto.*;
+import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.dto.ExchangeRate;
 import org.joda.time.LocalDate;
+import org.sdmx.resources.sdmxml.schemas.v2_1.data.generic.ComponentValueType;
+import org.sdmx.resources.sdmxml.schemas.v2_1.data.generic.DataSetType;
+import org.sdmx.resources.sdmxml.schemas.v2_1.data.generic.ObsType;
+import org.sdmx.resources.sdmxml.schemas.v2_1.data.generic.SeriesType;
+import org.sdmx.resources.sdmxml.schemas.v2_1.message.GenericDataType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,38 +24,39 @@ public class GenericDataDtoMapper {
     private static final String KEY_CURRENCY_DENOM = "CURRENCY_DENOM";
     private static final String NOT_A_NUMBER = "NaN";
 
-    public static List<ExchangeRate> mapToExchangeRates(GenericDataDto genericDataDto) {
+    public static List<ExchangeRate> mapToExchangeRates(GenericDataType genericData) {
         List<ExchangeRate> exchangeRates = new ArrayList<>();
-        for (SeriesDto s : genericDataDto.getDataSet().getSeries()) {
-            try {
-                Map<String, String> currencies = getCurrencies(s);
-                String sourceCurrency = currencies.get(KEY_CURRENCY);
-                if (sourceCurrency == null) {
-                    LOG.info("Source currency should not be null");
-                    continue;
+        for (DataSetType dataSet : genericData.getDataSet()) {
+            for (SeriesType s : dataSet.getSeries()) {
+                try {
+                    Map<String, String> currencies = getCurrencies(s);
+                    String sourceCurrency = currencies.get(KEY_CURRENCY);
+                    if (sourceCurrency == null) {
+                        LOG.info("Source currency should not be null");
+                        continue;
+                    }
+                    String targetCurrency = currencies.get(KEY_CURRENCY_DENOM);
+                    if (targetCurrency == null) {
+                        LOG.info("Target currency should not be null");
+                        continue;
+                    }
+                    exchangeRates.addAll(getExchangeRates(s, sourceCurrency, targetCurrency));
+                } catch (RuntimeException e) {
+                    LOG.error("Could not add one or more rates to the cache, because the data seems invalid", e);
                 }
-                String targetCurrency = currencies.get(KEY_CURRENCY_DENOM);
-                if (targetCurrency == null) {
-                    LOG.info("Target currency should not be null");
-                    continue;
-                }
-                exchangeRates.addAll(getExchangeRates(s, sourceCurrency, targetCurrency));
-
-            } catch (RuntimeException e) {
-                LOG.error("Could not add one or more rates to the cache, because the data seems invalid", e);
             }
         }
         return exchangeRates;
     }
 
-    private static List<ExchangeRate> getExchangeRates(SeriesDto s, String sourceCurrency, String targetCurrency) {
+    private static List<ExchangeRate> getExchangeRates(SeriesType s, String sourceCurrency, String targetCurrency) {
         List<ExchangeRate> exchangeRates = new ArrayList<>();
-        for (ObsDto obs : s.getObs()) {
+        for (ObsType obs : s.getObs()) {
             try {
-                String rateAsString = obs.getRate().getValue();
+                String rateAsString = obs.getObsValue().getValue();
                 if (!rateAsString.equals(NOT_A_NUMBER)) {
                     BigDecimal rate = new BigDecimal(rateAsString);
-                    LocalDate date = new LocalDate(obs.getDate().getValue());
+                    LocalDate date = new LocalDate(obs.getObsDimension().getValue());
                     exchangeRates.add(new ExchangeRate(rate, sourceCurrency, targetCurrency, date));
                 }
             } catch (RuntimeException e) {
@@ -60,15 +66,15 @@ public class GenericDataDtoMapper {
         return exchangeRates;
     }
 
-    private static Map<String, String> getCurrencies(SeriesDto s) {
+    private static Map<String, String> getCurrencies(SeriesType s) {
         Map<String, String> currencies = new HashMap<>();
         boolean foundCurrency = false;
         boolean foundCurrencyDenom = false;
         if ((s.getSeriesKey() == null)
-                || (s.getSeriesKey().getKeys() == null)) {
+                || (s.getSeriesKey().getValue() == null)) {
             return currencies;
         }
-        for (KeyDto key : s.getSeriesKey().getKeys()) {
+        for (ComponentValueType key : s.getSeriesKey().getValue()) {
             if ((!foundCurrency)
                     && (KEY_CURRENCY.equals(key.getId()))) {
                 currencies.put(KEY_CURRENCY, key.getValue());

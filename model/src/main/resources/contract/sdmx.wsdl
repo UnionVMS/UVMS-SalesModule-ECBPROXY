@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions name="ebc-proxy"
+                  targetNamespace="urn:ecb-proxy.sales.schema.fisheries.ec.europa.eu:v1"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+>
+    <wsdl:documentation>Version: 1.0</wsdl:documentation>
+    <wsdl:types>
+        <xsd:schema>
+            <xsd:import namespace="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message"
+                        schemaLocation="xsd/SDMXMessage.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+
+</wsdl:definitions>

@@ -20,7 +20,7 @@
 
         <dependency>
             <groupId>eu.europa.ec.fisheries.uvms.sales</groupId>
-            <artifactId>sales-model</artifactId>
+            <artifactId>sales-proxy-ecb-model</artifactId>
         </dependency>
 
         <dependency>

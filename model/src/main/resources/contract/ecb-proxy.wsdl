@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions name="ebc-proxy"
+                  targetNamespace="urn:ecb-proxy.sales.schema.fisheries.ec.europa.eu:v1"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:ecw="urn:ecb-proxy.sales.schema.fisheries.ec.europa.eu:v1"
+                  xmlns:ect="urn:types.ecb-proxy.sales.schema.fisheries.ec.europa.eu:v1"
+>
+    <wsdl:documentation>Version: 1.0</wsdl:documentation>
+    <wsdl:types>
+        <xsd:schema>
+            <xsd:import namespace="urn:types.ecb-proxy.sales.schema.fisheries.ec.europa.eu:v1"
+                        schemaLocation="xsd/EcbProxy_1p0.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+
+    <wsdl:message name="GetExchangeRateRequest">
+        <wsdl:part name="request" element="ect:getExchangeRateRequest"/>
+    </wsdl:message>
+    <wsdl:message name="GetExchangeRateResponse">
+        <wsdl:part name="response" element="ect:getExchangeRateResponse"/>
+    </wsdl:message>
+
+    <wsdl:portType name="EcbProxyPortType">
+        <wsdl:operation name="convertCurrency">
+            <wsdl:input message="ecw:GetExchangeRateRequest"/>
+            <wsdl:output message="ecw:GetExchangeRateResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+</wsdl:definitions>

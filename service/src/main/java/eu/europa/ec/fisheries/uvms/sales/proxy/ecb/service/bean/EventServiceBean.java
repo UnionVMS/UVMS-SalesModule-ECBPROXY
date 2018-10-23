@@ -2,8 +2,7 @@ package eu.europa.ec.fisheries.uvms.sales.proxy.ecb.service.bean;
 
 import eu.europa.ec.fisheries.schema.sales.proxy.ecb.types.v1.GetExchangeRateRequest;
 import eu.europa.ec.fisheries.schema.sales.proxy.ecb.types.v1.GetExchangeRateResponse;
-import eu.europa.ec.fisheries.uvms.sales.model.exception.SalesMarshallException;
-import eu.europa.ec.fisheries.uvms.sales.model.mapper.JAXBMarshaller;
+import eu.europa.ec.fisheries.uvms.commons.message.impl.JAXBUtils;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.message.event.EcbProxyErrorEvent;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.message.event.EcbProxyEventMessage;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.message.event.EcbProxyGetExchangeRateEvent;
@@ -16,6 +15,8 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.enterprise.event.Observes;
 import javax.jms.DeliveryMode;
+import javax.jms.JMSException;
+import javax.xml.bind.JAXBException;
 
 @Slf4j
 @Stateless
@@ -30,10 +31,9 @@ public class EventServiceBean implements EventService {
     @Override
     public void getExchangeRate(@Observes @EcbProxyGetExchangeRateEvent EcbProxyEventMessage event) {
         log.info("Get exchange rate");
-        GetExchangeRateResponse getExchangeRateResponse = null;
+        GetExchangeRateResponse getExchangeRateResponse;
         try {
             getExchangeRateResponse = client.getExchangeRate(getGetExchangeRateRequest(event));
-
         } catch (Exception e) {
             String errorMessage = "Unable to process get exchange rate request in ECB proxy. Reason: " + e.getMessage();
             log.error(errorMessage, e);
@@ -61,12 +61,12 @@ public class EventServiceBean implements EventService {
         }
     }
 
-    private GetExchangeRateRequest getGetExchangeRateRequest(EcbProxyEventMessage event) throws SalesMarshallException {
-        return JAXBMarshaller.unmarshallTextMessage(event.getRequestMessage(), GetExchangeRateRequest.class);
+    private GetExchangeRateRequest getGetExchangeRateRequest(EcbProxyEventMessage event) throws JMSException, JAXBException {
+        return JAXBUtils.unMarshallMessage(event.getRequestMessage().getText(), GetExchangeRateRequest.class);
     }
 
-    private String getExchangeRateResponseAsString(GetExchangeRateResponse getExchangeRateResponse) throws SalesMarshallException {
-        return JAXBMarshaller.marshallJaxBObjectToString(getExchangeRateResponse);
+    private String getExchangeRateResponseAsString(GetExchangeRateResponse getExchangeRateResponse) throws JAXBException {
+        return JAXBUtils.marshallJaxBObjectToString(getExchangeRateResponse);
     }
 
     private void sendErrorResponse(EcbProxyEventMessage event, String errorMessage) {

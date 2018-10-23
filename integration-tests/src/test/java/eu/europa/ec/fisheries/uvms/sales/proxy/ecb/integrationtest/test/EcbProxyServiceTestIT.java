@@ -2,7 +2,7 @@ package eu.europa.ec.fisheries.uvms.sales.proxy.ecb.integrationtest.test;
 
 import com.google.common.base.Optional;
 import eu.europa.ec.fisheries.schema.sales.proxy.ecb.types.v1.GetExchangeRateResponse;
-import eu.europa.ec.fisheries.uvms.sales.model.mapper.JAXBMarshaller;
+import eu.europa.ec.fisheries.uvms.commons.message.impl.JAXBUtils;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.integrationtest.deployment.TestOnGoodWorkingEcbProxy;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.integrationtest.test.factory.SalesEcbProxyMessageFactory;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.integrationtest.test.helper.SalesEcbProxyServiceTestHelper;
@@ -75,7 +75,7 @@ public class EcbProxyServiceTestIT extends TestOnGoodWorkingEcbProxy {
 
         // Assert, receive GetExchangeRateResponse
         TextMessage textMessage = salesEcbProxyServiceTestHelper.receiveTextMessage(salesEcbProxyServiceTestHelper.getReplyToSalesQueue(), jmsMessageId);
-        GetExchangeRateResponse getExchangeRateResponse = JAXBMarshaller.unmarshallTextMessage(textMessage, GetExchangeRateResponse.class);
+        GetExchangeRateResponse getExchangeRateResponse = JAXBUtils.unMarshallMessage(textMessage.getText(), GetExchangeRateResponse.class);
         assertEquals("DKK", getExchangeRateResponse.getSourceCurrency());
         assertEquals("EUR", getExchangeRateResponse.getTargetCurrency());
         assertEquals(LocalDate.now().toDateTimeAtStartOfDay().toDate(), getExchangeRateResponse.getDate().toDate());

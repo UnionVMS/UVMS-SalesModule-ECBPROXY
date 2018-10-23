@@ -2,8 +2,8 @@ package eu.europa.ec.fisheries.uvms.sales.proxy.ecb.service.bean;
 
 import eu.europa.ec.fisheries.uvms.config.exception.ConfigServiceException;
 import eu.europa.ec.fisheries.uvms.config.service.ParameterService;
-import eu.europa.ec.fisheries.uvms.sales.model.exception.SalesServiceException;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.domain.constant.ParameterKey;
+import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.service.exception.SalesEcbProxyServiceException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -53,7 +53,7 @@ public class ConfigServiceBeanTest {
         try {
             configServiceBean.getParameter(ParameterKey.ECB_ENDPOINT);
 
-        } catch (SalesServiceException e) {
+        } catch (SalesEcbProxyServiceException e) {
             assertEquals(expectedErrorMessage, e.getMessage());
         }
 

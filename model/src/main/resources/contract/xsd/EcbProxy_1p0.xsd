@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="urn:types.ecb-proxy.sales.schema.fisheries.ec.europa.eu:v1"
+            xmlns:ecb="urn:types.ecb-proxy.sales.schema.fisheries.ec.europa.eu:v1"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified"
+            version="1.0">
+
+    <xsd:simpleType name="ecbProxyRequestMethod">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="GET_EXCHANGE_RATE"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="ecbProxyBaseRequest" abstract="true">
+        <xsd:sequence>
+            <xsd:element name="method" type="ecb:ecbProxyRequestMethod"/>
+            <xsd:element name="comment" type="xsd:string"/>
+            <xsd:element name="username" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:element name="getExchangeRateRequest">
+        <xsd:complexType>
+            <xsd:complexContent>
+                <xsd:extension base="ecb:ecbProxyBaseRequest">
+                    <xsd:sequence>
+                        <xsd:element name="sourceCurrency" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                        <xsd:element name="targetCurrency" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                        <xsd:element name="date" type="xsd:date" minOccurs="1" maxOccurs="1" />
+                    </xsd:sequence>
+                </xsd:extension>
+            </xsd:complexContent>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="getExchangeRateResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="sourceCurrency" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="targetCurrency" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="date" type="xsd:date" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="exchangeRate" type="xsd:decimal" minOccurs="1" maxOccurs="1" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+</xsd:schema>

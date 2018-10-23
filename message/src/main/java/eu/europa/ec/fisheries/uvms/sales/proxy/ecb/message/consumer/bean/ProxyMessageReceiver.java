@@ -3,8 +3,7 @@ package eu.europa.ec.fisheries.uvms.sales.proxy.ecb.message.consumer.bean;
 import eu.europa.ec.fisheries.schema.sales.proxy.ecb.types.v1.EcbProxyBaseRequest;
 import eu.europa.ec.fisheries.uvms.commons.message.api.MessageConstants;
 import eu.europa.ec.fisheries.uvms.commons.message.context.MappedDiagnosticContext;
-import eu.europa.ec.fisheries.uvms.sales.model.exception.SalesMarshallException;
-import eu.europa.ec.fisheries.uvms.sales.model.mapper.JAXBMarshaller;
+import eu.europa.ec.fisheries.uvms.commons.message.impl.JAXBUtils;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.message.constants.SalesEcbProxyMessageConstants;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.message.event.EcbProxyErrorEvent;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.message.event.EcbProxyEventMessage;
@@ -16,9 +15,11 @@ import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
+import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
+import javax.xml.bind.JAXBException;
 
 import static eu.europa.ec.fisheries.schema.sales.proxy.ecb.types.v1.EcbProxyRequestMethod.GET_EXCHANGE_RATE;
 
@@ -46,7 +47,7 @@ public class ProxyMessageReceiver implements MessageListener {
         try {
             requestMessage = (TextMessage) message;
             MappedDiagnosticContext.addMessagePropertiesToThreadMappedDiagnosticContext(requestMessage);
-            EcbProxyBaseRequest request = JAXBMarshaller.unmarshallTextMessage(requestMessage, EcbProxyBaseRequest.class);
+            EcbProxyBaseRequest request = JAXBUtils.unMarshallMessage(requestMessage.getText(), EcbProxyBaseRequest.class);
             if (request.getMethod() == GET_EXCHANGE_RATE) {
                 getExchangeRateEvent.fire(new EcbProxyEventMessage(requestMessage, null));
                 return;
@@ -55,7 +56,7 @@ public class ProxyMessageReceiver implements MessageListener {
             log.error(errorMessage);
             errorEvent.fire(new EcbProxyEventMessage(requestMessage, errorMessage));
 
-        } catch (SalesMarshallException e) {
+        } catch (JMSException | JAXBException e) {
             String errorMessage = "Invalid message received in ECB proxy";
             log.error(errorMessage);
             errorEvent.fire(new EcbProxyEventMessage(requestMessage, errorMessage));

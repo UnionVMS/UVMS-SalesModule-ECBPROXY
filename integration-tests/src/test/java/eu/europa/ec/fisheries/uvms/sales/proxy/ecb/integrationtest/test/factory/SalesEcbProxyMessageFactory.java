@@ -1,7 +1,7 @@
 package eu.europa.ec.fisheries.uvms.sales.proxy.ecb.integrationtest.test.factory;
 
-import eu.europa.ec.fisheries.uvms.sales.model.exception.SalesMarshallException;
-import eu.europa.ec.fisheries.uvms.sales.model.mapper.EcbProxyRequestMapper;
+import eu.europa.ec.fisheries.uvms.commons.message.api.MessageException;
+import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.model.mapper.EcbProxyRequestMapper;
 import org.apache.commons.io.IOUtils;
 import org.joda.time.DateTime;
 
@@ -23,7 +23,7 @@ public class SalesEcbProxyMessageFactory {
         try {
             return EcbProxyRequestMapper.createGetExchangeRateRequest(sourceCurrency, targetCurrency, dateTime);
 
-        } catch (SalesMarshallException e) {
+        } catch (MessageException e) {
             throw new RuntimeException("Unable to create the request for the ECB proxy", e);
         }
     }

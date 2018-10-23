@@ -12,9 +12,9 @@ package eu.europa.ec.fisheries.uvms.sales.proxy.ecb.service.bean;
 
 import eu.europa.ec.fisheries.uvms.config.exception.ConfigServiceException;
 import eu.europa.ec.fisheries.uvms.config.service.ParameterService;
-import eu.europa.ec.fisheries.uvms.sales.model.exception.SalesServiceException;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.domain.constant.ParameterKey;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.service.ConfigService;
+import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.service.exception.SalesEcbProxyServiceException;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.ejb.EJB;
@@ -35,7 +35,7 @@ public class ConfigServiceBean implements ConfigService {
         } catch (ConfigServiceException e) {
             String errorMessage = "Could not retrieve a setting with key " + parameterKey.getKey() + " from Config. Reason: " + e.getMessage();
             log.error(errorMessage);
-            throw new SalesServiceException(errorMessage, e);
+            throw new SalesEcbProxyServiceException(errorMessage, e);
         }
     }
 }
