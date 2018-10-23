@@ -5,13 +5,12 @@ import eu.europa.ec.fisheries.uvms.config.exception.ConfigServiceException;
 import eu.europa.ec.fisheries.uvms.config.service.ParameterService;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.domain.constant.ParameterKey;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.dto.ExchangeRate;
-import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.dto.GenericDataDto;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.exception.EcbProxyException;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.mapper.GenericDataDtoMapper;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.service.EcbRestService;
-import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.service.ExchangeRateService;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.LocalDate;
+import org.sdmx.resources.sdmxml.schemas.v2_1.message.GenericDataType;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -27,9 +26,6 @@ public class EcbRestServiceBean implements EcbRestService {
     @EJB
     private ParameterService parameterService;
 
-    @EJB
-    private ExchangeRateService exchangeRateService;
-
     public List<ExchangeRate> findExchangeRates(Optional<LocalDate> startDate) throws EcbProxyException {
         String ecbEndpoint = getEcbEndpointForStartDate(startDate);
         log.info("Invoke ECB currency exchange service: " + ecbEndpoint);
@@ -38,9 +34,10 @@ public class EcbRestServiceBean implements EcbRestService {
             WebTarget target = client.target(ecbEndpoint);
             Invocation.Builder requestBuilder = target.request(MediaType.APPLICATION_XML_TYPE);
 
-            GenericDataDto response = requestBuilder
+            GenericDataType response = requestBuilder
+                    .accept("application/vnd.sdmx.genericdata+xml;version=2.1")
                     .buildGet()
-                    .invoke(GenericDataDto.class);
+                    .invoke(GenericDataType.class);
 
             return GenericDataDtoMapper.mapToExchangeRates(response);
 

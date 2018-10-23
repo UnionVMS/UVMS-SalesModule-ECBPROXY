@@ -1,9 +1,10 @@
 package eu.europa.ec.fisheries.uvms.sales.proxy.ecb.mapper;
 
-import com.google.common.collect.Lists;
-import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.dto.*;
+import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.dto.ExchangeRate;
 import org.joda.time.LocalDate;
 import org.junit.Test;
+import org.sdmx.resources.sdmxml.schemas.v2_1.data.generic.*;
+import org.sdmx.resources.sdmxml.schemas.v2_1.message.GenericDataType;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -14,75 +15,75 @@ import static org.junit.Assert.assertTrue;
 public class GenericDataDtoMapperTest {
 
     @Test
-    public void testMapToExchangeRates() throws Exception {
+    public void testMapToExchangeRates() {
         //data set
-        KeyDto seriesKey1a = new KeyDto()
-                .id("FREQ")
-                .value("D");
+        ComponentValueType seriesKey1a = new ComponentValueType()
+                .withId("FREQ")
+                .withValue("D");
 
-        KeyDto seriesKey1b = new KeyDto()
-                .id("CURRENCY")
-                .value("ARS");
+        ComponentValueType seriesKey1b = new ComponentValueType()
+                .withId("CURRENCY")
+                .withValue("ARS");
 
-        KeyDto seriesKey1c = new KeyDto()
-                .id("CURRENCY_DENOM")
-                .value("EUR");
+        ComponentValueType seriesKey1c = new ComponentValueType()
+                .withId("CURRENCY_DENOM")
+                .withValue("EUR");
 
-        KeyDto seriesKey2a = new KeyDto()
-                .id("FREQ")
-                .value("D");
+        ComponentValueType seriesKey2a = new ComponentValueType()
+                .withId("FREQ")
+                .withValue("D");
 
-        KeyDto seriesKey2b = new KeyDto()
-                .id("CURRENCY")
-                .value("AUD");
+        ComponentValueType seriesKey2b = new ComponentValueType()
+                .withId("CURRENCY")
+                .withValue("AUD");
 
-        KeyDto seriesKey2c = new KeyDto()
-                .id("CURRENCY_DENOM")
-                .value("EUR");
+        ComponentValueType seriesKey2c = new ComponentValueType()
+                .withId("CURRENCY_DENOM")
+                .withValue("EUR");
 
-        ObsDto seriesObs1a = new ObsDto()
-                .date(new ValueDto().value("2017-01-01"))
-                .rate(new ValueDto().value("1.0123"));
+        ObsType seriesObs1a = new ObsType()
+                .withObsDimension(new ObsValueType().withValue("2017-01-01"))
+                .withObsValue(new ObsValueType().withValue("1.0123"));
 
-        ObsDto seriesObs1b = new ObsDto()
-                .date(new ValueDto().value("2017-02-01"))
-                .rate(new ValueDto().value("2.0123"));
+        ObsType seriesObs1b = new ObsType()
+                .withObsDimension(new ObsValueType().withValue("2017-02-01"))
+                .withObsValue(new ObsValueType().withValue("2.0123"));
 
-        ObsDto seriesObs1c = new ObsDto()
-                .date(new ValueDto().value("2017-03-01"))
-                .rate(new ValueDto().value("3.0123"));
+        ObsType seriesObs1c = new ObsType()
+                .withObsDimension(new ObsValueType().withValue("2017-03-01"))
+                .withObsValue(new ObsValueType().withValue("3.0123"));
 
-        ObsDto seriesObs2a = new ObsDto()
-                .date(new ValueDto().value("2017-01-01"))
-                .rate(new ValueDto().value("4.0123"));
+        ObsType seriesObs2a = new ObsType()
+                .withObsDimension(new ObsValueType().withValue("2017-01-01"))
+                .withObsValue(new ObsValueType().withValue("4.0123"));
 
-        ObsDto seriesObs2b = new ObsDto()
-                .date(new ValueDto().value("2017-02-01"))
-                .rate(new ValueDto().value("something weird"));
+        ObsType seriesObs2b = new ObsType()
+                .withObsDimension(new ObsValueType().withValue("2017-02-01"))
+                .withObsValue(new ObsValueType().withValue("something weird"));
 
-        ObsDto seriesObs2c = new ObsDto()
-                .date(new ValueDto().value("2017-03-01"))
-                .rate(new ValueDto().value("NaN"));
+        ObsType seriesObs2c = new ObsType()
+                .withObsDimension(new ObsValueType().withValue("2017-03-01"))
+                .withObsValue(new ObsValueType().withValue("NaN"));
 
-        SeriesKeyDto seriesKey1 = new SeriesKeyDto()
-                .keys(Lists.newArrayList(seriesKey1a, seriesKey1b, seriesKey1c));
+        ValuesType seriesKey1 = new ValuesType()
+                .withValue(seriesKey1a, seriesKey1b, seriesKey1c);
 
-        SeriesKeyDto seriesKey2 = new SeriesKeyDto()
-                .keys(Lists.newArrayList(seriesKey2a, seriesKey2b, seriesKey2c));
+        ValuesType seriesKey2 = new ValuesType()
+                .withValue(seriesKey2a, seriesKey2b, seriesKey2c);
 
-        SeriesDto series1 = new SeriesDto()
-                .seriesKey(seriesKey1)
-                .obs(Lists.newArrayList(seriesObs1a, seriesObs1b, seriesObs1c));
+        SeriesType series1 = new SeriesType()
+                .withSeriesKey(seriesKey1)
+                .withObs(seriesObs1a, seriesObs1b, seriesObs1c);
 
-        SeriesDto series2 = new SeriesDto()
-                .seriesKey(seriesKey2)
-                .obs(Lists.newArrayList(seriesObs2a, seriesObs2b, seriesObs2c));
+        SeriesType series2 = new SeriesType()
+                .withSeriesKey(seriesKey2)
+                .withObs(seriesObs2a, seriesObs2b, seriesObs2c);
 
-        DataSetDto dataSet = new DataSetDto()
-                .series(Lists.newArrayList(series1, series2));
+        DataSetType dataSet = new DataSetType()
+                .withSeries(series1, series2);
 
-        GenericDataDto genericData = new GenericDataDto()
-            .dataSet(dataSet);
+        GenericDataType genericData = new GenericDataType()
+            .withDataSet(dataSet);
 
         //execute
         List<ExchangeRate> exchangeRates = GenericDataDtoMapper.mapToExchangeRates(genericData);
@@ -116,37 +117,36 @@ public class GenericDataDtoMapperTest {
     }
 
     @Test
-    public void testMapToExchangeRateForSingleRate() throws Exception {
-
+    public void testMapToExchangeRateForSingleRate() {
         //data set
-        KeyDto seriesKey1a = new KeyDto()
-                .id("FREQ")
-                .value("D");
+        ComponentValueType seriesKey1a = new ComponentValueType()
+                .withId("FREQ")
+                .withValue("D");
 
-        KeyDto seriesKey1b = new KeyDto()
-                .id("CURRENCY")
-                .value("ARS");
+        ComponentValueType seriesKey1b = new ComponentValueType()
+                .withId("CURRENCY")
+                .withValue("ARS");
 
-        KeyDto seriesKey1c = new KeyDto()
-                .id("CURRENCY_DENOM")
-                .value("EUR");
+        ComponentValueType seriesKey1c = new ComponentValueType()
+                .withId("CURRENCY_DENOM")
+                .withValue("EUR");
 
-        ObsDto seriesObs1a = new ObsDto()
-                .date(new ValueDto().value("2017-01-01"))
-                .rate(new ValueDto().value("1.0123"));
+        ObsType seriesObs1a = new ObsType()
+                .withObsDimension(new ObsValueType().withValue("2017-01-01"))
+                .withObsValue(new ObsValueType().withValue("1.0123"));
 
-        SeriesKeyDto seriesKey1 = new SeriesKeyDto()
-                .keys(Lists.newArrayList(seriesKey1a, seriesKey1b, seriesKey1c));
+        ValuesType seriesKey1 = new ValuesType()
+                .withValue(seriesKey1a, seriesKey1b, seriesKey1c);
 
-        SeriesDto series1 = new SeriesDto()
-                .seriesKey(seriesKey1)
-                .obs(Lists.newArrayList(seriesObs1a));
+        SeriesType series1 = new SeriesType()
+                .withSeriesKey(seriesKey1)
+                .withObs(seriesObs1a);
 
-        DataSetDto dataSet = new DataSetDto()
-                .series(Lists.newArrayList(series1));
+        DataSetType dataSet = new DataSetType()
+                .withSeries(series1);
 
-        GenericDataDto genericData = new GenericDataDto()
-                .dataSet(dataSet);
+        GenericDataType genericData = new GenericDataType()
+                .withDataSet(dataSet);
 
         //execute
         List<ExchangeRate> exchangeRates = GenericDataDtoMapper.mapToExchangeRates(genericData);
@@ -159,30 +159,28 @@ public class GenericDataDtoMapperTest {
         assertEquals("ARS", exchangeRate1.getSourceCurrency());
         assertEquals("EUR", exchangeRate1.getTargetCurrency());
         assertEquals(BigDecimal.valueOf(1.0123), exchangeRate1.getRate().stripTrailingZeros());
-
     }
 
 
 
     @Test
-    public void tryMapToExchangeRateForSingleRateNoCurrencies() throws Exception {
-
+    public void tryMapToExchangeRateForSingleRateNoCurrencies() {
         //data set
-        ObsDto seriesObs1a = new ObsDto()
-                .date(new ValueDto().value("2017-01-01"))
-                .rate(new ValueDto().value("1.0123"));
+        ObsType seriesObs1a = new ObsType()
+                .withObsDimension(new ObsValueType().withValue("2017-01-01"))
+                .withObsValue(new ObsValueType().withValue("1.0123"));
 
-        SeriesKeyDto seriesKey1 = new SeriesKeyDto();
+        ValuesType seriesKey1 = new ValuesType();
 
-        SeriesDto series1 = new SeriesDto()
-                .seriesKey(seriesKey1)
-                .obs(Lists.newArrayList(seriesObs1a));
+        SeriesType series1 = new SeriesType()
+                .withSeriesKey(seriesKey1)
+                .withObs(seriesObs1a);
 
-        DataSetDto dataSet = new DataSetDto()
-                .series(Lists.newArrayList(series1));
+        DataSetType dataSet = new DataSetType()
+                .withSeries(series1);
 
-        GenericDataDto genericData = new GenericDataDto()
-                .dataSet(dataSet);
+        GenericDataType genericData = new GenericDataType()
+                .withDataSet(dataSet);
 
         //execute
         List<ExchangeRate> exchangeRates = GenericDataDtoMapper.mapToExchangeRates(genericData);
@@ -192,29 +190,28 @@ public class GenericDataDtoMapperTest {
     }
 
     @Test
-    public void tryMapToExchangeRateForSingleRateAndSourceCurrencyOnly() throws Exception {
-
+    public void tryMapToExchangeRateForSingleRateAndSourceCurrencyOnly() {
         //data set
-        KeyDto seriesKey1b = new KeyDto()
-                .id("CURRENCY")
-                .value("ARS");
+        ComponentValueType seriesKey1b = new ComponentValueType()
+                .withId("CURRENCY")
+                .withValue("ARS");
 
-        ObsDto seriesObs1a = new ObsDto()
-                .date(new ValueDto().value("2017-01-01"))
-                .rate(new ValueDto().value("1.0123"));
+        ObsType seriesObs1a = new ObsType()
+                .withObsDimension(new ObsValueType().withValue("2017-01-01"))
+                .withObsValue(new ObsValueType().withValue("1.0123"));
 
-        SeriesKeyDto seriesKey1 = new SeriesKeyDto()
-                .keys(Lists.newArrayList(seriesKey1b));
+        ValuesType seriesKey1 = new ValuesType()
+                .withValue(seriesKey1b);
 
-        SeriesDto series1 = new SeriesDto()
-                .seriesKey(seriesKey1)
-                .obs(Lists.newArrayList(seriesObs1a));
+        SeriesType series1 = new SeriesType()
+                .withSeriesKey(seriesKey1)
+                .withObs(seriesObs1a);
 
-        DataSetDto dataSet = new DataSetDto()
-                .series(Lists.newArrayList(series1));
+        DataSetType dataSet = new DataSetType()
+                .withSeries(series1);
 
-        GenericDataDto genericData = new GenericDataDto()
-                .dataSet(dataSet);
+        GenericDataType genericData = new GenericDataType()
+                .withDataSet(dataSet);
 
         //execute
         List<ExchangeRate> exchangeRates = GenericDataDtoMapper.mapToExchangeRates(genericData);
@@ -224,29 +221,28 @@ public class GenericDataDtoMapperTest {
     }
 
     @Test
-    public void tryMapToExchangeRateForSingleRateAndTargetCurrencyOnly() throws Exception {
-
+    public void tryMapToExchangeRateForSingleRateAndTargetCurrencyOnly() {
         //data set
-        KeyDto seriesKey1c = new KeyDto()
-                .id("CURRENCY_DENOM")
-                .value("EUR");
+        ComponentValueType seriesKey1c = new ComponentValueType()
+                .withId("CURRENCY_DENOM")
+                .withValue("EUR");
 
-        ObsDto seriesObs1a = new ObsDto()
-                .date(new ValueDto().value("2017-01-01"))
-                .rate(new ValueDto().value("1.0123"));
+        ObsType seriesObs1a = new ObsType()
+                .withObsDimension(new ObsValueType().withValue("2017-01-01"))
+                .withObsValue(new ObsValueType().withValue("1.0123"));
 
-        SeriesKeyDto seriesKey1 = new SeriesKeyDto()
-                .keys(Lists.newArrayList(seriesKey1c));
+        ValuesType seriesKey1 = new ValuesType()
+                .withValue(seriesKey1c);
 
-        SeriesDto series1 = new SeriesDto()
-                .seriesKey(seriesKey1)
-                .obs(Lists.newArrayList(seriesObs1a));
+        SeriesType series1 = new SeriesType()
+                .withSeriesKey(seriesKey1)
+                .withObs(seriesObs1a);
 
-        DataSetDto dataSet = new DataSetDto()
-                .series(Lists.newArrayList(series1));
+        DataSetType dataSet = new DataSetType()
+                .withSeries(series1);
 
-        GenericDataDto genericData = new GenericDataDto()
-                .dataSet(dataSet);
+        GenericDataType genericData = new GenericDataType()
+                .withDataSet(dataSet);
 
         //execute
         List<ExchangeRate> exchangeRates = GenericDataDtoMapper.mapToExchangeRates(genericData);
@@ -254,5 +250,4 @@ public class GenericDataDtoMapperTest {
         //assert
         assertTrue(exchangeRates.isEmpty());
     }
-
 }

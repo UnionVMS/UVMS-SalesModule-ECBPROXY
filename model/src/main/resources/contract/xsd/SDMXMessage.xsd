@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright SDMX 2010 - http://www.sdmx.org -->
+<!-- WARNING: this xsd has been altered, to reduce the size to a minimum -->
+
+<xs:schema xmlns="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message" targetNamespace="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message" xmlns:data="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/data/generic" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xs:import namespace="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/data/generic" schemaLocation="SDMXDataGeneric.xsd"/>
+	
+	<xs:annotation>
+		<xs:appinfo>SDMX Message Namespace Module</xs:appinfo>
+		<xs:documentation>The message namespace module contains the common message constructs, including the common header information which is used with all other SDMX-ML namespace modules.</xs:documentation>
+	</xs:annotation>
+
+	<!-- Data Messages -->
+	<xs:element name="GenericData" type="GenericDataType">
+		<xs:annotation>
+			<xs:documentation>GenericData is used to convey data in a non data structure specific form. Data sets in this message will be each have a related structure specification in the header, which states the data structure the data conforms to and how the data is organised (i.e. the observation dimension).</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+
+	<xs:complexType name="GenericDataType">
+		<xs:annotation>
+			<xs:documentation>GenericDataType defines the contents of a generic data message.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DataSet" type="data:DataSetType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jaxb:bindings xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+               xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+               xmlns:xs="http://www.w3.org/2001/XMLSchema"
+               jaxb:version="2.1">
+
+    <jaxb:globalBindings typesafeEnumMaxMembers="900">
+        <xjc:simple />
+        <xjc:serializable uid="1"/>
+
+        <!-- use JODA-Time DateTime for xs:date -->
+        <jaxb:javaType name="org.joda.time.DateTime"
+                       xmlType="xs:date"
+                       parseMethod="eu.europa.ec.fisheries.uvms.sales.proxy.ecb.model.mapper.XsdDateTimeConverter.unmarshal"
+                       printMethod="eu.europa.ec.fisheries.uvms.sales.proxy.ecb.model.mapper.XsdDateTimeConverter.marshalDateTime"/>
+
+        <!-- use JODA-Time DateTime for xs:dateTime -->
+        <jaxb:javaType name="org.joda.time.DateTime"
+                       xmlType="xs:dateTime"
+                       parseMethod="eu.europa.ec.fisheries.uvms.sales.proxy.ecb.model.mapper.XsdDateTimeConverter.unmarshal"
+                       printMethod="eu.europa.ec.fisheries.uvms.sales.proxy.ecb.model.mapper.XsdDateTimeConverter.marshalDateTime"/>
+    </jaxb:globalBindings>
+</jaxb:bindings>
