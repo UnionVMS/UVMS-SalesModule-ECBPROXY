@@ -1,6 +1,5 @@
 package eu.europa.ec.fisheries.uvms.sales.proxy.ecb.service.bean;
 
-import com.google.common.base.Optional;
 import eu.europa.ec.fisheries.schema.sales.proxy.ecb.types.v1.GetExchangeRateRequest;
 import eu.europa.ec.fisheries.schema.sales.proxy.ecb.types.v1.GetExchangeRateResponse;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.exception.EcbProxyException;
@@ -15,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
@@ -76,7 +76,7 @@ public class EcbProxyClientBeanTest {
                 .withTargetCurrency(targetCurrency);
 
         //mock
-        doReturn(Optional.absent()).when(exchangeRateService).findRateMostRecentTillDate(date, sourceCurrency, targetCurrency);
+        doReturn(Optional.empty()).when(exchangeRateService).findRateMostRecentTillDate(date, sourceCurrency, targetCurrency);
         doReturn(Optional.of(rate)).when(exchangeRateService).findRateMostRecentTillDate(date, targetCurrency, sourceCurrency);
 
         //execute
@@ -106,8 +106,8 @@ public class EcbProxyClientBeanTest {
                 .withTargetCurrency(targetCurrency);
 
         //mock
-        doReturn(Optional.absent()).when(exchangeRateService).findRateMostRecentTillDate(date, sourceCurrency, targetCurrency);
-        doReturn(Optional.absent()).when(exchangeRateService).findRateMostRecentTillDate(date, targetCurrency, sourceCurrency);
+        doReturn(Optional.empty()).when(exchangeRateService).findRateMostRecentTillDate(date, sourceCurrency, targetCurrency);
+        doReturn(Optional.empty()).when(exchangeRateService).findRateMostRecentTillDate(date, targetCurrency, sourceCurrency);
 
         expectedException.expect(EcbProxyException.class);
         expectedException.expectMessage("No known exchange rate for " + sourceCurrency + " to " + targetCurrency + " on " + date);

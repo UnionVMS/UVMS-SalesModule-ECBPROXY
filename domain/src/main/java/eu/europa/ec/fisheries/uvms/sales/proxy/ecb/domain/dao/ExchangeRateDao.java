@@ -1,11 +1,11 @@
 package eu.europa.ec.fisheries.uvms.sales.proxy.ecb.domain.dao;
 
-import com.google.common.base.Optional;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.domain.entity.ExchangeRateEntity;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.domain.exception.SalesEcbProxyDaoException;
 import org.joda.time.LocalDate;
 
 import javax.validation.constraints.NotNull;
+import java.util.Optional;
 
 public interface ExchangeRateDao extends DaoForSalesECBProxy<ExchangeRateEntity, Integer> {
 

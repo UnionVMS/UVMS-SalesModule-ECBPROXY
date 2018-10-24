@@ -1,6 +1,5 @@
 package eu.europa.ec.fisheries.uvms.sales.proxy.ecb.service.bean;
 
-import com.google.common.base.Optional;
 import eu.europa.ec.fisheries.uvms.config.service.ParameterService;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.domain.constant.ParameterKey;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.dto.ExchangeRate;
@@ -27,6 +26,7 @@ import javax.ws.rs.core.Response;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.verify;
@@ -243,7 +243,7 @@ public class EcbRestServiceBeanTest {
     @Test
     public void tryFindExchangeRatesForMandatoryStartDateEcbProxyException() throws Exception {
         try {
-            ecbRestServiceBean.findExchangeRates(Optional.<LocalDate>absent());
+            ecbRestServiceBean.findExchangeRates(Optional.empty());
             fail("EcbProxyException should fail for mandatory start date");
 
         } catch (EcbProxyException e) {

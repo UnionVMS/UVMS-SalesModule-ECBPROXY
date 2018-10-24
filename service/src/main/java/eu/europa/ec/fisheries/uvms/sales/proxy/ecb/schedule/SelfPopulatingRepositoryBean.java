@@ -1,8 +1,7 @@
 package eu.europa.ec.fisheries.uvms.sales.proxy.ecb.schedule;
 
-import com.google.common.base.Optional;
-import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.service.EcbRestService;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.dto.ExchangeRate;
+import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.service.EcbRestService;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.service.ExchangeRateService;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.LocalDate;
@@ -10,6 +9,7 @@ import org.joda.time.LocalDate;
 import javax.annotation.PostConstruct;
 import javax.ejb.*;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @Slf4j

@@ -1,6 +1,5 @@
 package eu.europa.ec.fisheries.uvms.sales.proxy.ecb.domain.bean;
 
-import com.google.common.base.Optional;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.domain.ExchangeRateDomainModel;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.domain.dao.ExchangeRateDao;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.domain.entity.ExchangeRateEntity;
@@ -11,6 +10,7 @@ import org.joda.time.LocalDate;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.math.BigDecimal;
+import java.util.Optional;
 
 @Slf4j
 @Stateless
@@ -25,7 +25,7 @@ public class ExchangeRateDomainModelBean implements ExchangeRateDomainModel {
         if (rateMostRecentTillDate.isPresent()) {
             return Optional.of(rateMostRecentTillDate.get().getStartDateTime().toLocalDate());
         }
-        return Optional.absent();
+        return Optional.empty();
     }
 
     @Override
@@ -34,14 +34,16 @@ public class ExchangeRateDomainModelBean implements ExchangeRateDomainModel {
         if (rateMostRecentTillDate.isPresent()) {
             return Optional.of(rateMostRecentTillDate.get().getRate());
         }
-        return Optional.absent();
+        return Optional.empty();
     }
 
     @Override
     public ExchangeRateEntity persist(ExchangeRateEntity exchangeRateEntityToPersist) {
         if (exchangeRateEntityToPersist == null) {
             log.warn("Exchange rate to persist should not be null");
+            return null;
+        } else {
+            return exchangeRateDao.create(exchangeRateEntityToPersist);
         }
-        return exchangeRateDao.create(exchangeRateEntityToPersist);
     }
 }

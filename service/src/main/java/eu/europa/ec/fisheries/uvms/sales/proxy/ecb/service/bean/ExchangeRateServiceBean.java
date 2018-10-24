@@ -1,6 +1,5 @@
 package eu.europa.ec.fisheries.uvms.sales.proxy.ecb.service.bean;
 
-import com.google.common.base.Optional;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.domain.ExchangeRateDomainModel;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.domain.entity.ExchangeRateEntity;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.domain.exception.SalesEcbProxyDaoException;
@@ -18,6 +17,7 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Stateless

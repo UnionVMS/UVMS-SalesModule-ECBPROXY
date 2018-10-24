@@ -1,6 +1,5 @@
 package eu.europa.ec.fisheries.uvms.sales.proxy.ecb.integrationtest.test;
 
-import com.google.common.base.Optional;
 import eu.europa.ec.fisheries.schema.sales.proxy.ecb.types.v1.GetExchangeRateResponse;
 import eu.europa.ec.fisheries.uvms.commons.message.impl.JAXBUtils;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.integrationtest.deployment.TestOnGoodWorkingEcbProxy;
@@ -26,6 +25,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
 import javax.jms.TextMessage;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

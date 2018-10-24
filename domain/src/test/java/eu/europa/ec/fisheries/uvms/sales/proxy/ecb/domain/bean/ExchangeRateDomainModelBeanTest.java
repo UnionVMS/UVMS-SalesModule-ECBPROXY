@@ -1,6 +1,5 @@
 package eu.europa.ec.fisheries.uvms.sales.proxy.ecb.domain.bean;
 
-import com.google.common.base.Optional;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.domain.dao.ExchangeRateDao;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.domain.entity.ExchangeRateEntity;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.domain.exception.SalesEcbProxyDaoException;
@@ -14,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -55,7 +55,7 @@ public class ExchangeRateDomainModelBeanTest {
     @Test
     public void testFindDateOfMostRecentRateForEmptyRepository() throws Exception {
         //mock
-        doReturn(Optional.absent()).when(exchangeRateDao).findByMostRecentRate();
+        doReturn(Optional.empty()).when(exchangeRateDao).findByMostRecentRate();
 
         //Execute
         Optional<LocalDate> localDate = exchangeRateDomainModelBean.findDateOfMostRecentRate();
@@ -119,7 +119,7 @@ public class ExchangeRateDomainModelBeanTest {
         String targetCurrency = "EUR";
 
         //mock
-        doReturn(Optional.absent()).when(exchangeRateDao).findByMostRecentTillDate(localDate, sourceCurrency, targetCurrency);
+        doReturn(Optional.empty()).when(exchangeRateDao).findByMostRecentTillDate(localDate, sourceCurrency, targetCurrency);
 
         //Execute
         Optional<BigDecimal> rateMostRecentTillDate = exchangeRateDomainModelBean.findRateMostRecentTillDate(localDate, sourceCurrency, targetCurrency);

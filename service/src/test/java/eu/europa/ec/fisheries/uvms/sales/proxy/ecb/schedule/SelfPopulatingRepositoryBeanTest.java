@@ -1,6 +1,5 @@
 package eu.europa.ec.fisheries.uvms.sales.proxy.ecb.schedule;
 
-import com.google.common.base.Optional;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.dto.ExchangeRate;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.exception.EcbProxyException;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.service.EcbRestService;
@@ -17,6 +16,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import javax.ejb.Timer;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Optional;
 
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.*;
@@ -198,7 +198,7 @@ public class SelfPopulatingRepositoryBeanTest {
         exchangeRates.add(exchangeRate);
 
         //mock
-        doReturn(Optional.absent()).when(exchangeRateService).getMostRecentExchangeRateDate();
+        doReturn(Optional.empty()).when(exchangeRateService).getMostRecentExchangeRateDate();
         doReturn(exchangeRates).when(ecbRestService).findExchangeRates(Optional.of(startDate));
         doNothing().when(exchangeRateService).persistExchangeRates(exchangeRates);
 

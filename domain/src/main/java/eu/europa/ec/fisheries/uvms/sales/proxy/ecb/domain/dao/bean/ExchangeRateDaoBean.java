@@ -1,6 +1,5 @@
 package eu.europa.ec.fisheries.uvms.sales.proxy.ecb.domain.dao.bean;
 
-import com.google.common.base.Optional;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.domain.dao.ExchangeRateDao;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.domain.entity.ExchangeRateEntity;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.domain.exception.SalesEcbProxyDaoException;
@@ -9,15 +8,9 @@ import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDate;
 
 import javax.ejb.Stateless;
-import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import javax.validation.constraints.NotNull;
 import java.util.List;
-
-import static com.google.common.base.Preconditions.checkNotNull;
+import java.util.Optional;
 
 @Slf4j
 @Stateless
@@ -32,7 +25,7 @@ public class ExchangeRateDaoBean extends BaseDaoForSalesECBProxy<ExchangeRateEnt
             if (!exchangeRateEntities.isEmpty()) {
                 return Optional.of(exchangeRateEntities.get(0));
             }
-            return Optional.absent();
+            return Optional.empty();
 
         } catch (Exception e) {
             String errorMessage = "Unable to find date of most recent rate";
@@ -54,7 +47,7 @@ public class ExchangeRateDaoBean extends BaseDaoForSalesECBProxy<ExchangeRateEnt
             if (!exchangeRateEntities.isEmpty()) {
                 return Optional.of(exchangeRateEntities.get(0));
             }
-            return Optional.absent();
+            return Optional.empty();
 
         } catch (Exception e) {
             String errorMessage = "Unable to find exchange rates till date";

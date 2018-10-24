@@ -1,6 +1,5 @@
 package eu.europa.ec.fisheries.uvms.sales.proxy.ecb.domain.dao.bean;
 
-import com.google.common.base.Optional;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.domain.entity.ExchangeRateEntity;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.domain.framework.AbstractDaoTest;
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.domain.framework.DataSet;
@@ -9,6 +8,7 @@ import org.joda.time.LocalDate;
 import org.junit.Test;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 import static org.junit.Assert.*;
 
