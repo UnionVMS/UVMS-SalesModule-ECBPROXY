@@ -22,7 +22,6 @@
         <logback.core.version>1.2.3</logback.core.version>
         <jaxb2.basics.version>0.9.5</jaxb2.basics.version>
         <joda.time.version>2.9.7</joda.time.version>
-        <guava.version>20.0</guava.version>
 
         <!-- excluding generated files from Sonar analysis -->
         <sonar.exclusions>**/*eu/europa/ec/fisheries/schema/sales/**/*, **/*org/w3/_2001/xmlschema/**/*, **/*org/sdmx/**/*</sonar.exclusions>
@@ -107,11 +106,6 @@
     </profiles>
 
     <dependencies>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>${guava.version}</version>
-        </dependency>
         <dependency>
             <groupId>org.jvnet.jaxb2_commons</groupId>
             <artifactId>jaxb2-basics</artifactId>
