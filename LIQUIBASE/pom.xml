@@ -33,6 +33,19 @@
     
     <profiles>
         <profile>
+            <id>docker</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <db.url>offline:postgresql?changeLogFile=target/changelog.csv</db.url>
+                <db.user>salesecbproxy</db.user>
+                <db.passwd>salesecbproxy</db.passwd>
+                <db.defaultSchema>salesecbproxy</db.defaultSchema>
+            </properties>
+        </profile>
+
+        <profile>
             <id>belgium-local</id>
             <properties>
                 <db.url>jdbc:postgresql://dbunid02/duvms</db.url>
@@ -74,9 +87,9 @@
             </activation>
             <properties>
                 <db.url>offline:postgresql?changeLogFile=target/changelog.csv</db.url>
-                <db.user>sales</db.user>
-                <db.passwd>sales</db.passwd>
-                <db.defaultSchema>sales</db.defaultSchema>
+                <db.user>salesecbproxy</db.user>
+                <db.passwd>salesecbproxy</db.passwd>
+                <db.defaultSchema>salesecbproxy</db.defaultSchema>
             </properties>
             <build>
                 <plugins>
