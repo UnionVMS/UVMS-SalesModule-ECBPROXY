@@ -32,20 +32,6 @@
     </repositories>
     
     <profiles>
-
-        <profile>
-            <id>docker</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <properties>
-                <db.url>jdbc:postgresql://localhost:25432/db71u</db.url>
-                <db.user>salesecbproxy</db.user>
-                <db.passwd>salesecbproxy</db.passwd>
-                <db.defaultSchema>salesecbproxy</db.defaultSchema>
-            </properties>
-        </profile>
-
         <profile>
             <id>belgium-local</id>
             <properties>
