@@ -2,13 +2,13 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>sales-proxy-ecb-liquibase</artifactId>
-    <version>1.0.7</version>
+    <version>1.0.8</version>
     <name>sales-proxy-ecb-liquibase</name>
 
     <parent>
         <groupId>eu.europa.ec.fisheries.uvms.sales</groupId>
         <artifactId>sales-proxy-ecb</artifactId>
-        <version>1.0.7</version>
+        <version>1.0.8</version>
     </parent>
 
     <properties>
@@ -32,14 +32,13 @@
     </repositories>
     
     <profiles>
-
         <profile>
             <id>docker</id>
             <activation>
                 <activeByDefault>false</activeByDefault>
             </activation>
             <properties>
-                <db.url>jdbc:postgresql://localhost:25432/db71u</db.url>
+                <db.url>offline:postgresql?changeLogFile=target/changelog.csv</db.url>
                 <db.user>salesecbproxy</db.user>
                 <db.passwd>salesecbproxy</db.passwd>
                 <db.defaultSchema>salesecbproxy</db.defaultSchema>
@@ -88,9 +87,9 @@
             </activation>
             <properties>
                 <db.url>offline:postgresql?changeLogFile=target/changelog.csv</db.url>
-                <db.user>sales</db.user>
-                <db.passwd>sales</db.passwd>
-                <db.defaultSchema>sales</db.defaultSchema>
+                <db.user>salesecbproxy</db.user>
+                <db.passwd>salesecbproxy</db.passwd>
+                <db.defaultSchema>salesecbproxy</db.defaultSchema>
             </properties>
             <build>
                 <plugins>

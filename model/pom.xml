@@ -5,11 +5,11 @@
     <parent>
         <groupId>eu.europa.ec.fisheries.uvms.sales</groupId>
         <artifactId>sales-proxy-ecb</artifactId>
-        <version>1.0.7</version>
+        <version>1.0.8</version>
     </parent>
 
     <artifactId>sales-proxy-ecb-model</artifactId>
-    <version>1.0.7</version>
+    <version>1.0.8</version>
     <packaging>jar</packaging>
     <name>${project.artifactId}</name>
 
@@ -169,7 +169,7 @@
     </distributionManagement>
     <scm>
         <connection>${scm.connection}</connection>
-        <tag>sales-proxy-ecb-1.0.7</tag>
+        <tag>sales-proxy-ecb-1.0.8</tag>
     </scm>
 
 </project>
