@@ -7,9 +7,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.joda.time.LocalDate;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.*;
+import javax.annotation.Resource;
+import javax.ejb.EJB;
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
+import javax.enterprise.concurrent.ManagedScheduledExecutorService;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @Slf4j
@@ -25,17 +30,19 @@ public class SelfPopulatingRepositoryBean {
     @EJB
     private ExchangeRateService exchangeRateService;
 
+    @Resource
+    private ManagedScheduledExecutorService executorService;
+
     @PostConstruct
     public void initialize() {
-        log.info("Populate repository for missing exchange rates");
-        populateRepositoryForMissingExchangeRates();
-    }
-
-    // Retry interval: 30 minute
-    @Schedule(minute = "*/30", hour = "*", persistent = false)
-    public void retryPopulateRepositoryForMissingExchangeRates(Timer timer) {
-        log.info("Scheduled populate repository for missing exchange rates");
-        populateRepositoryForMissingExchangeRates();
+        executorService.scheduleAtFixedRate(() -> {
+            log.info("Populate repository for missing exchange rates");
+            try {
+                populateRepositoryForMissingExchangeRates();
+            } catch(Exception t) {
+                log.error("Something went wrong fetching exchange rates", t);
+            }
+        }, 0, 30, TimeUnit.MINUTES);
     }
 
     private boolean isAlreadyStartedPopulatingRepositoryForMissingExchangeRatesAllowed() {
@@ -46,7 +53,7 @@ public class SelfPopulatingRepositoryBean {
         this.isBusyPopulatingExchangeRateRepository.getAndSet(false);
     }
 
-    private void populateRepositoryForMissingExchangeRates() {
+    void populateRepositoryForMissingExchangeRates() {
         if (!isAlreadyStartedPopulatingRepositoryForMissingExchangeRatesAllowed()) {
             log.info("Already busy populating currency exchange rate repository for today's rates");
             return;

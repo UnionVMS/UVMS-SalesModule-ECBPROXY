@@ -13,12 +13,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import javax.ejb.Timer;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import static org.junit.Assert.fail;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -33,42 +31,11 @@ public class SelfPopulatingRepositoryBeanTest {
     @Mock
     private ExchangeRateService exchangeRateService;
 
-    @Mock
-    Timer timer;
-
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 
     @Test
-    public void testInitialize() throws Exception {
-        //data set
-        LocalDate mostRecentExchangeRateDate = new LocalDate(2018, 1, 16);
-        LocalDate startDate = new LocalDate(2018, 1, 17);
-        ExchangeRate exchangeRate = new ExchangeRate();
-        exchangeRate.setRate(new BigDecimal(1.68));
-        exchangeRate.setSourceCurrency("NZD");
-        exchangeRate.setTargetCurrency("EUR");
-        exchangeRate.setStartDate(new LocalDate(2018, 1, 16));
-        ArrayList<ExchangeRate> exchangeRates = new ArrayList<>();
-        exchangeRates.add(exchangeRate);
-
-        //mock
-        doReturn(Optional.of(mostRecentExchangeRateDate)).when(exchangeRateService).getMostRecentExchangeRateDate();
-        doReturn(exchangeRates).when(ecbRestService).findExchangeRates(Optional.of(startDate));
-        doNothing().when(exchangeRateService).persistExchangeRates(exchangeRates);
-
-        //execute
-        selfPopulatingRepositoryBean.initialize();
-
-        //verify and assert
-        verify(exchangeRateService).getMostRecentExchangeRateDate();
-        verify(ecbRestService).findExchangeRates(Optional.of(startDate));
-        verify(exchangeRateService).persistExchangeRates(exchangeRates);
-        verifyNoMoreInteractions(ecbRestService, exchangeRateService, timer);
-    }
-
-    @Test
-    public void tryInitializeForMissingExchangeRatesAndEcbProxyException() throws Exception {
+    public void tryPopulateRepositoryForMissingExchangeRatesWhenMissingExchangeRatesAndEcbProxyException() throws Exception {
         //data set
         LocalDate mostRecentExchangeRateDate = new LocalDate(2018, 1, 16);
         LocalDate startDate = new LocalDate(2018, 1, 17);
@@ -86,22 +53,17 @@ public class SelfPopulatingRepositoryBeanTest {
         doThrow(new EcbProxyException("MyEcbProxyException")).when(exchangeRateService).persistExchangeRates(exchangeRates);
 
         //execute
-        try {
-            selfPopulatingRepositoryBean.initialize();
-
-        } catch(Exception e) {
-            fail("No exception should have been thrown");
-        }
+        selfPopulatingRepositoryBean.populateRepositoryForMissingExchangeRates();
 
         //verify and assert
         verify(exchangeRateService).getMostRecentExchangeRateDate();
         verify(ecbRestService).findExchangeRates(Optional.of(startDate));
         verify(exchangeRateService).persistExchangeRates(exchangeRates);
-        verifyNoMoreInteractions(ecbRestService, exchangeRateService, timer);
+        verifyNoMoreInteractions(ecbRestService, exchangeRateService);
     }
 
     @Test
-    public void testRetryPopulateRepositoryForMissingExchangeRates() throws Exception {
+    public void testPopulateRepositoryForMissingExchangeRatesWhenThereAreMissingExchangeRates() throws Exception {
         //data set
         LocalDate mostRecentExchangeRateDate = new LocalDate(2018, 1, 16);
         LocalDate startDate = new LocalDate(2018, 1, 17);
@@ -119,74 +81,33 @@ public class SelfPopulatingRepositoryBeanTest {
         doNothing().when(exchangeRateService).persistExchangeRates(exchangeRates);
 
         //execute
-        selfPopulatingRepositoryBean.retryPopulateRepositoryForMissingExchangeRates(timer);
+        selfPopulatingRepositoryBean.populateRepositoryForMissingExchangeRates();
 
         //verify and assert
         verify(exchangeRateService).getMostRecentExchangeRateDate();
         verify(ecbRestService).findExchangeRates(Optional.of(startDate));
         verify(exchangeRateService).persistExchangeRates(exchangeRates);
-        verifyNoMoreInteractions(ecbRestService, exchangeRateService, timer);
+        verifyNoMoreInteractions(ecbRestService, exchangeRateService);
     }
 
     @Test
-    public void testRetryPopulateRepositoryForExchangeRepositoryUpToDateNoActionRequired() throws Exception {
+    public void testPopulateRepositoryForMissingExchangeRatesWhenThereIsNoActionRequired() throws Exception {
         //data set
         LocalDate yesterday = LocalDate.now().minusDays(1);
-        LocalDate startDate = new LocalDate(2018, 1, 17);
-        ExchangeRate exchangeRate = new ExchangeRate();
-        exchangeRate.setRate(new BigDecimal(1.68));
-        exchangeRate.setSourceCurrency("NZD");
-        exchangeRate.setTargetCurrency("EUR");
-        exchangeRate.setStartDate(new LocalDate(2018, 1, 16));
-        ArrayList<ExchangeRate> exchangeRates = new ArrayList<>();
-        exchangeRates.add(exchangeRate);
 
         //mock
         doReturn(Optional.of(yesterday)).when(exchangeRateService).getMostRecentExchangeRateDate();
 
         //execute
-        selfPopulatingRepositoryBean.retryPopulateRepositoryForMissingExchangeRates(timer);
+        selfPopulatingRepositoryBean.populateRepositoryForMissingExchangeRates();
 
         //verify and assert
         verify(exchangeRateService).getMostRecentExchangeRateDate();
-        verifyNoMoreInteractions(ecbRestService, exchangeRateService, timer);
+        verifyNoMoreInteractions(ecbRestService, exchangeRateService);
     }
 
     @Test
-    public void tryRetryPopulateRepositoryForMissingExchangeRatesAndEcbProxyException() throws Exception {
-        //data set
-        LocalDate mostRecentExchangeRateDate = new LocalDate(2018, 1, 16);
-        LocalDate startDate = new LocalDate(2018, 1, 17);
-        ExchangeRate exchangeRate = new ExchangeRate();
-        exchangeRate.setRate(new BigDecimal(1.68));
-        exchangeRate.setSourceCurrency("NZD");
-        exchangeRate.setTargetCurrency("EUR");
-        exchangeRate.setStartDate(new LocalDate(2018, 1, 16));
-        ArrayList<ExchangeRate> exchangeRates = new ArrayList<>();
-        exchangeRates.add(exchangeRate);
-
-        //mock
-        doReturn(Optional.of(mostRecentExchangeRateDate)).when(exchangeRateService).getMostRecentExchangeRateDate();
-        doReturn(exchangeRates).when(ecbRestService).findExchangeRates(Optional.of(startDate));
-        doThrow(new EcbProxyException("MyEcbProxyException")).when(exchangeRateService).persistExchangeRates(exchangeRates);
-
-        //execute
-        try {
-            selfPopulatingRepositoryBean.retryPopulateRepositoryForMissingExchangeRates(timer);
-
-        } catch(Exception e) {
-            fail("No exception should have been thrown");
-        }
-
-        //verify and assert
-        verify(exchangeRateService).getMostRecentExchangeRateDate();
-        verify(ecbRestService).findExchangeRates(Optional.of(startDate));
-        verify(exchangeRateService).persistExchangeRates(exchangeRates);
-        verifyNoMoreInteractions(ecbRestService, exchangeRateService, timer);
-    }
-
-    @Test
-    public void testInitializeFirstTimePopulateCurrencyExchangeRateTableForEmptyRatesRepository() throws Exception {
+    public void testPopulateRepositoryForMissingExchangeRatesFirstTimePopulateCurrencyExchangeRateTableForEmptyRatesRepository() throws Exception {
         //data set
         LocalDate startDate = LocalDate.now().minusDays(1).minusMonths(3).plusDays(1);
         ExchangeRate exchangeRate = new ExchangeRate();
@@ -203,13 +124,13 @@ public class SelfPopulatingRepositoryBeanTest {
         doNothing().when(exchangeRateService).persistExchangeRates(exchangeRates);
 
         //execute
-        selfPopulatingRepositoryBean.initialize();
+        selfPopulatingRepositoryBean.populateRepositoryForMissingExchangeRates();
 
         //verify and assert
         verify(exchangeRateService).getMostRecentExchangeRateDate();
         verify(ecbRestService).findExchangeRates(Optional.of(startDate));
         verify(exchangeRateService).persistExchangeRates(exchangeRates);
-        verifyNoMoreInteractions(ecbRestService, exchangeRateService, timer);
+        verifyNoMoreInteractions(ecbRestService, exchangeRateService);
     }
 
 }
