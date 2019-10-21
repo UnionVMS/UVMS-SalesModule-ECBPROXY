@@ -4,7 +4,7 @@
     <parent>
         <groupId>eu.europa.ec.fisheries.uvms.sales</groupId>
         <artifactId>sales-proxy-ecb</artifactId>
-        <version>1.0.10-SNAPSHOT</version>
+        <version>${uvms.sales.proxy.version}</version>
     </parent>
 	
     <artifactId>sales-proxy-ecb-commons</artifactId>
