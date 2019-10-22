@@ -30,7 +30,7 @@ public class ConfigServiceBean implements ConfigService {
     @Override
     public String getParameter(ParameterKey parameterKey) {
         try {
-            return parameterService.getStringValue(parameterKey.getKey());
+            return parameterService.getParamValueById(parameterKey.getKey());
 
         } catch (ConfigServiceException e) {
             String errorMessage = "Could not retrieve a setting with key " + parameterKey.getKey() + " from Config. Reason: " + e.getMessage();

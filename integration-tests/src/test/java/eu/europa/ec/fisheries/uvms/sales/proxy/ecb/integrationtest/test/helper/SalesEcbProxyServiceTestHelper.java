@@ -23,15 +23,14 @@ public class SalesEcbProxyServiceTestHelper {
 
     @PostConstruct
     public void setup() {
-        connectionFactory = JMSUtils.lookupConnectionFactory();
         salesEcbProxyEventQueue = JMSUtils.lookupQueue(MessageConstants.QUEUE_ECB_PROXY);
         replyToSalesQueue = JMSUtils.lookupQueue(MessageConstants.QUEUE_SALES);
     }
 
     public String sendMessageToSalesEcbProxyMessageConsumerBean(String messageToSend, Destination replyToQueue) {
 
-        try (Connection connection = connectionFactory.createConnection();
-             Session session = JMSUtils.connectToQueue(connection);
+        try (Connection connection = JMSUtils.getConnectionV2();
+             Session session = JMSUtils.createSessionAndStartConnection(connection);
              MessageProducer producer = session.createProducer(salesEcbProxyEventQueue)) {
 
             TextMessage textMessage = session.createTextMessage(messageToSend);
@@ -50,8 +49,8 @@ public class SalesEcbProxyServiceTestHelper {
 
     public TextMessage receiveTextMessage(Destination receiveFromDestination, String correlationId) {
         assertNotNull(correlationId);
-        try (Connection connection = connectionFactory.createConnection();
-            Session session = JMSUtils.connectToQueue(connection);
+        try (Connection connection = JMSUtils.getConnectionV2();
+            Session session = JMSUtils.createSessionAndStartConnection(connection);
             MessageConsumer consumer = session.createConsumer(receiveFromDestination, "JMSCorrelationID='" + correlationId + "'")) {
             Message receivedMessage = consumer.receive(TIMEOUT);
             if (receivedMessage == null) {

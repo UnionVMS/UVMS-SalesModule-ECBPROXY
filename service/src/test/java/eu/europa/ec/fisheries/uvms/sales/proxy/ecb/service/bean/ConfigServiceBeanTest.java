@@ -29,13 +29,13 @@ public class ConfigServiceBeanTest {
         String expectedParameterValue = "MyParameterValue";
 
         //mock
-        doReturn(expectedParameterValue).when(parameterService).getStringValue(anyString());
+        doReturn(expectedParameterValue).when(parameterService).getParamValueById(anyString());
 
         //execute
         String actualParameterValue = configServiceBean.getParameter(ParameterKey.ECB_ENDPOINT);
 
         //verify and assert
-        verify(parameterService).getStringValue(anyString());
+        verify(parameterService).getParamValueById(anyString());
         verifyNoMoreInteractions(parameterService);
         assertEquals(actualParameterValue, expectedParameterValue);
     }
@@ -47,7 +47,7 @@ public class ConfigServiceBeanTest {
         String expectedErrorMessage = "Could not retrieve a setting with key sales.ebc.proxy.endpoint from Config. Reason: MyConfigServiceException";
 
         //mock
-        doThrow(new ConfigServiceException("MyConfigServiceException")).when(parameterService).getStringValue(anyString());
+        doThrow(new ConfigServiceException("MyConfigServiceException")).when(parameterService).getParamValueById(anyString());
 
         //execute
         try {
@@ -58,7 +58,7 @@ public class ConfigServiceBeanTest {
         }
 
         //verify and assert
-        verify(parameterService).getStringValue(anyString());
+        verify(parameterService).getParamValueById(anyString());
         verifyNoMoreInteractions(parameterService);
     }
 }

@@ -73,7 +73,7 @@ public class EcbRestServiceBean implements EcbRestService {
 
     private String getEcbEndpointFromSettingsConfig() throws EcbProxyException {
         try {
-            return parameterService.getStringValue(ParameterKey.ECB_ENDPOINT.getKey());
+            return parameterService.getParamValueById(ParameterKey.ECB_ENDPOINT.getKey());
 
         } catch (ConfigServiceException e) {
             throw new EcbProxyException("Unable to retrieve settings configuration for key: " + ParameterKey.ECB_ENDPOINT.getKey() + " Reason: " + e.getMessage());

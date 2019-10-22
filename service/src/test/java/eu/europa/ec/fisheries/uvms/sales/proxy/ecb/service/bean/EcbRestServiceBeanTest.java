@@ -59,7 +59,7 @@ public class EcbRestServiceBeanTest {
         GenericDataType genericData = new GenericDataType().withDataSet(dataSet);
 
         //mock
-        doReturn("MyEndPoint").when(parameterService).getStringValue(ParameterKey.ECB_ENDPOINT.getKey());
+        doReturn("MyEndPoint").when(parameterService).getParamValueById(ParameterKey.ECB_ENDPOINT.getKey());
         mockStatic(ClientBuilder.class);
         mockStatic(GenericDataDtoMapper.class);
         Client client = mock(Client.class);
@@ -77,7 +77,7 @@ public class EcbRestServiceBeanTest {
         List<ExchangeRate> exchangeRates = ecbRestServiceBean.findExchangeRates(startDate);
 
         //verify and assert
-        verify(parameterService).getStringValue(ParameterKey.ECB_ENDPOINT.getKey());
+        verify(parameterService).getParamValueById(ParameterKey.ECB_ENDPOINT.getKey());
         verifyStatic();
         ClientBuilder.newClient();
         verify(client).target("MyEndPoint?startPeriod=2017-03-05");
@@ -104,7 +104,7 @@ public class EcbRestServiceBeanTest {
         GenericDataType genericData = new GenericDataType().withDataSet(dataSet);
 
         //mock
-        doReturn("MyEndPoint").when(parameterService).getStringValue(ParameterKey.ECB_ENDPOINT.getKey());
+        doReturn("MyEndPoint").when(parameterService).getParamValueById(ParameterKey.ECB_ENDPOINT.getKey());
         mockStatic(ClientBuilder.class);
         mockStatic(GenericDataDtoMapper.class);
         Client client = mock(Client.class);
@@ -129,7 +129,7 @@ public class EcbRestServiceBeanTest {
         }
 
         //verify and assert
-        verify(parameterService).getStringValue(ParameterKey.ECB_ENDPOINT.getKey());
+        verify(parameterService).getParamValueById(ParameterKey.ECB_ENDPOINT.getKey());
         verifyStatic();
         ClientBuilder.newClient();
         verify(client).target("MyEndPoint?startPeriod=2017-03-05");
@@ -153,7 +153,7 @@ public class EcbRestServiceBeanTest {
         GenericDataType genericData = new GenericDataType().withDataSet(dataSet);
 
         //mock
-        doReturn("MyEndPoint").when(parameterService).getStringValue(ParameterKey.ECB_ENDPOINT.getKey());
+        doReturn("MyEndPoint").when(parameterService).getParamValueById(ParameterKey.ECB_ENDPOINT.getKey());
         mockStatic(ClientBuilder.class);
         mockStatic(GenericDataDtoMapper.class);
         Client client = mock(Client.class);
@@ -178,7 +178,7 @@ public class EcbRestServiceBeanTest {
         }
 
         //verify and assert
-        verify(parameterService).getStringValue(ParameterKey.ECB_ENDPOINT.getKey());
+        verify(parameterService).getParamValueById(ParameterKey.ECB_ENDPOINT.getKey());
         verifyStatic();
         ClientBuilder.newClient();
         verify(client).target("MyEndPoint?startPeriod=2017-03-05");
@@ -202,7 +202,7 @@ public class EcbRestServiceBeanTest {
         GenericDataType genericData = new GenericDataType().withDataSet(dataSet);
 
         //mock
-        doReturn("MyEndPoint").when(parameterService).getStringValue(ParameterKey.ECB_ENDPOINT.getKey());
+        doReturn("MyEndPoint").when(parameterService).getParamValueById(ParameterKey.ECB_ENDPOINT.getKey());
         mockStatic(ClientBuilder.class);
         mockStatic(GenericDataDtoMapper.class);
         Client client = mock(Client.class);
@@ -227,7 +227,7 @@ public class EcbRestServiceBeanTest {
         }
 
         //verify and assert
-        verify(parameterService).getStringValue(ParameterKey.ECB_ENDPOINT.getKey());
+        verify(parameterService).getParamValueById(ParameterKey.ECB_ENDPOINT.getKey());
         verifyStatic();
         ClientBuilder.newClient();
         verify(client).target("MyEndPoint?startPeriod=2017-03-05");
