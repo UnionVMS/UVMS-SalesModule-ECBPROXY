@@ -85,6 +85,7 @@
                 <activeByDefault>false</activeByDefault>
             </activation>
             <properties>
+                <db.changeLogFile>changelog/db-changelog-master.xml</db.changeLogFile>
                 <db.url>offline:postgresql?changeLogFile=target/changelog.csv</db.url>
                 <db.user>salesecbproxy</db.user>
                 <db.passwd>salesecbproxy</db.passwd>
@@ -95,12 +96,10 @@
                     <plugin>
                         <groupId>org.liquibase</groupId>
                         <artifactId>liquibase-maven-plugin</artifactId>
-                        <version>3.4.2</version>
                     </plugin>
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>build-helper-maven-plugin</artifactId>
-                        <version>3.0.0</version>
                         <executions>
                             <execution>
                                 <id>attach-artifacts</id>
@@ -137,7 +136,6 @@
                 <plugin>
                     <groupId>org.liquibase</groupId>
                     <artifactId>liquibase-maven-plugin</artifactId>
-                    <version>3.3.2</version>
                     <configuration>
                         <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
                         <changeLogFile>${db.changeLogFile}</changeLogFile>
