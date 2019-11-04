@@ -12,8 +12,8 @@
 
     <properties>
         <db.driver>org.postgresql.Driver</db.driver>
-        <db.changeLogFile>changelog/db-changelog-master.xml</db.changeLogFile>
-        <db.outputFile>changelog/generatedChangelog.xml</db.outputFile>
+        <db.changeLogFile>${project.basedir}/changelog/db-changelog-master.xml</db.changeLogFile>
+        <db.outputFile>${project.basedir}/changelog/generatedChangelog.xml</db.outputFile>
         <driver.groupId>org.postgresql</driver.groupId>
         <driver.artifactId>postgresql</driver.artifactId>
         <driver.version>9.4-1201-jdbc41</driver.version>
@@ -37,7 +37,7 @@
                 <activeByDefault>false</activeByDefault>
             </activation>
             <properties>
-                <db.url>offline:postgresql?changeLogFile=target/changelog.csv</db.url>
+                <db.url>offline:postgresql?changeLogFile=${project.build.directory}/changelog.csv</db.url>
                 <db.user>salesecbproxy</db.user>
                 <db.passwd>salesecbproxy</db.passwd>
                 <db.defaultSchema>salesecbproxy</db.defaultSchema>
@@ -85,8 +85,8 @@
                 <activeByDefault>false</activeByDefault>
             </activation>
             <properties>
-                <db.changeLogFile>changelog/db-changelog-master.xml</db.changeLogFile>
-                <db.url>offline:postgresql?changeLogFile=target/changelog.csv</db.url>
+
+                <db.url>offline:postgresql?changeLogFile=${project.build.directory}/changelog.csv</db.url>
                 <db.user>salesecbproxy</db.user>
                 <db.passwd>salesecbproxy</db.passwd>
                 <db.defaultSchema>salesecbproxy</db.defaultSchema>
