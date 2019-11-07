@@ -5,3 +5,7 @@
 **/sales-proxy-ecb.properties
 **/logging.properties
 .flattened-pom.xml
+.project
+.classpath
+.settings/
+pom.xml.versionsBackup
