@@ -25,7 +25,7 @@ public class ExchangeRateDaoBeanTest  extends AbstractDaoTest<ExchangeRateDaoBea
         assertEquals("NZD", exchangeRateEntity.getSourceCurrency());
         assertEquals("EUR", exchangeRateEntity.getTargetCurrency());
         assertEquals(new BigDecimal("1.69"), exchangeRateEntity.getRate());
-        assertEquals(expectedLocalDate.toDateTimeAtStartOfDay(DateTimeZone.UTC), exchangeRateEntity.getStartDateTime());
+        assertEquals(expectedLocalDate.toDateTimeAtStartOfDay(DateTimeZone.getDefault()), exchangeRateEntity.getStartDateTime().withZone(DateTimeZone.getDefault()).toLocalDate().toDateTimeAtStartOfDay());
     }
 
     @Test
@@ -49,7 +49,7 @@ public class ExchangeRateDaoBeanTest  extends AbstractDaoTest<ExchangeRateDaoBea
         assertEquals("NZD", exchangeRateEntity.getSourceCurrency());
         assertEquals("EUR", exchangeRateEntity.getTargetCurrency());
         assertEquals(new BigDecimal("1.69"), exchangeRateEntity.getRate());
-        assertEquals(expectedLocalDate.toDateTimeAtStartOfDay(DateTimeZone.UTC), exchangeRateEntity.getStartDateTime());
+        assertEquals(expectedLocalDate.toDateTimeAtStartOfDay(DateTimeZone.getDefault()), exchangeRateEntity.getStartDateTime().withZone(DateTimeZone.getDefault()).toLocalDate().toDateTimeAtStartOfDay());
     }
 
     @Test
@@ -65,7 +65,7 @@ public class ExchangeRateDaoBeanTest  extends AbstractDaoTest<ExchangeRateDaoBea
         assertEquals("NZD", exchangeRateEntity.getSourceCurrency());
         assertEquals("EUR", exchangeRateEntity.getTargetCurrency());
         assertEquals(new BigDecimal("1.69"), exchangeRateEntity.getRate());
-        assertEquals(localDate.toDateTimeAtStartOfDay(DateTimeZone.UTC), exchangeRateEntity.getStartDateTime());
+        assertEquals(localDate.toDateTimeAtStartOfDay(DateTimeZone.getDefault()), exchangeRateEntity.getStartDateTime().withZone(DateTimeZone.getDefault()).toLocalDate().toDateTimeAtStartOfDay());
     }
 
     @Test
@@ -81,7 +81,7 @@ public class ExchangeRateDaoBeanTest  extends AbstractDaoTest<ExchangeRateDaoBea
         assertEquals("NZD", exchangeRateEntity.getSourceCurrency());
         assertEquals("EUR", exchangeRateEntity.getTargetCurrency());
         assertEquals(new BigDecimal("1.67"), exchangeRateEntity.getRate());
-        assertEquals(localDate.toDateTimeAtStartOfDay(DateTimeZone.UTC), exchangeRateEntity.getStartDateTime());
+        assertEquals(localDate.toDateTimeAtStartOfDay(DateTimeZone.getDefault()), exchangeRateEntity.getStartDateTime().withZone(DateTimeZone.getDefault()).toLocalDate().toDateTimeAtStartOfDay());
     }
 
     @Test
@@ -97,7 +97,7 @@ public class ExchangeRateDaoBeanTest  extends AbstractDaoTest<ExchangeRateDaoBea
         assertEquals("NZD", exchangeRateEntity.getSourceCurrency());
         assertEquals("EUR", exchangeRateEntity.getTargetCurrency());
         assertEquals(new BigDecimal("1.68"), exchangeRateEntity.getRate());
-        assertEquals(localDate.toDateTimeAtStartOfDay(DateTimeZone.UTC), exchangeRateEntity.getStartDateTime());
+        assertEquals(localDate.toDateTimeAtStartOfDay(DateTimeZone.getDefault()), exchangeRateEntity.getStartDateTime().withZone(DateTimeZone.getDefault()).toLocalDate().toDateTimeAtStartOfDay());
     }
 
     @Test
@@ -114,7 +114,7 @@ public class ExchangeRateDaoBeanTest  extends AbstractDaoTest<ExchangeRateDaoBea
         assertEquals("NZD", exchangeRateEntity.getSourceCurrency());
         assertEquals("EUR", exchangeRateEntity.getTargetCurrency());
         assertEquals(new BigDecimal("1.69"), exchangeRateEntity.getRate());
-        assertEquals(expectedLocalDate.toDateTimeAtStartOfDay(DateTimeZone.UTC), exchangeRateEntity.getStartDateTime());
+        assertEquals(expectedLocalDate.toDateTimeAtStartOfDay(DateTimeZone.getDefault()), exchangeRateEntity.getStartDateTime().withZone(DateTimeZone.getDefault()).toLocalDate().toDateTimeAtStartOfDay());
     }
 
     @Test
@@ -148,7 +148,7 @@ public class ExchangeRateDaoBeanTest  extends AbstractDaoTest<ExchangeRateDaoBea
         assertEquals("HUF", exchangeRateEntity.getSourceCurrency());
         assertEquals("EUR", exchangeRateEntity.getTargetCurrency());
         assertEquals(new BigDecimal("309.20"), exchangeRateEntity.getRate());
-        assertEquals(localDate.toDateTimeAtStartOfDay(DateTimeZone.UTC), exchangeRateEntity.getStartDateTime());
+        assertEquals(localDate.toDateTimeAtStartOfDay(DateTimeZone.getDefault()), exchangeRateEntity.getStartDateTime().withZone(DateTimeZone.getDefault()).toLocalDate().toDateTimeAtStartOfDay());
     }
 
 }
