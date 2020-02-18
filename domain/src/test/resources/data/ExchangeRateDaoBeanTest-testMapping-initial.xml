@@ -2,7 +2,7 @@
 <dataset>
     <exchange_rate
             id="1"
-            start_date="2018-01-14 01:00:00"
+            start_date="2018-01-14 00:00:00"
             source_currency="NZD"
             target_currency="EUR"
             rate = "1.68"
@@ -10,7 +10,7 @@
     />
     <exchange_rate
             id="2"
-            start_date="2018-01-15 01:00:00"
+            start_date="2018-01-15 00:00:00"
             source_currency="NZD"
             target_currency="EUR"
             rate = "1.67"
@@ -18,7 +18,7 @@
     />
     <exchange_rate
             id="3"
-            start_date="2018-01-16 01:00:00"
+            start_date="2018-01-16 00:00:00"
             source_currency="NZD"
             target_currency="EUR"
             rate = "1.69"
@@ -26,7 +26,7 @@
     />
     <exchange_rate
             id="4"
-            start_date="2018-01-15 01:00:00"
+            start_date="2018-01-15 00:00:00"
             source_currency="HUF"
             target_currency="EUR"
             rate = "309.2"

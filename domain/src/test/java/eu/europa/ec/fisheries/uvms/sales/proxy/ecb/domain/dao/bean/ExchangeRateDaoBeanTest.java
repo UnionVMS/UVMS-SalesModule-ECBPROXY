@@ -5,14 +5,30 @@ import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.domain.framework.AbstractDaoT
 import eu.europa.ec.fisheries.uvms.sales.proxy.ecb.domain.framework.DataSet;
 import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDate;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.util.Optional;
+import java.util.TimeZone;
 
 import static org.junit.Assert.*;
 
 public class ExchangeRateDaoBeanTest  extends AbstractDaoTest<ExchangeRateDaoBean> {
+
+    static TimeZone defaultTZ;
+
+    @BeforeClass
+    public static void init() {
+        defaultTZ = TimeZone.getDefault();
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+    }
+
+    @AfterClass
+    public static void shutdown() {
+        TimeZone.setDefault(defaultTZ);
+    }
 
     @Test
     @DataSet(initialData = "data/ExchangeRateDaoBeanTest-testMapping-initial.xml")
